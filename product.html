@@ -435,16 +435,111 @@
 
 <script>
 
+// ==========================================
+// PRODUCT PAGE
+// ==========================================
+
 let productQuantity = 1;
 
 
 // ------------------------------------------
-// CHANGE PRODUCT QUANTITY
+// GET PRODUCT FROM URL
+// ------------------------------------------
+
+const urlParams =
+    new URLSearchParams(window.location.search);
+
+const productId =
+    urlParams.get("plant") || "peace-lily";
+
+const product =
+    products[productId];
+
+
+// ------------------------------------------
+// CHECK PRODUCT
+// ------------------------------------------
+
+if (!product) {
+
+    alert("Product not found.");
+
+    window.location.href = "index.html";
+
+}
+
+
+// ------------------------------------------
+// UPDATE PRODUCT PAGE
+// ------------------------------------------
+
+if (product) {
+
+    document.title =
+        product.name + " | Plant Store";
+
+
+    document.querySelector(
+        ".product-category"
+    ).textContent =
+        product.category;
+
+
+    document.querySelector(
+        ".product-details h1"
+    ).textContent =
+        product.name;
+
+
+    document.querySelector(
+        ".product-price"
+    ).textContent =
+        "KSh " + product.price.toLocaleString();
+
+
+    document.querySelector(
+        ".product-details > p"
+    ).textContent =
+        product.description;
+
+
+    const productPhoto =
+        document.querySelector(".product-photo");
+
+    productPhoto.textContent =
+        product.image;
+
+
+    const infoBoxes =
+        document.querySelectorAll(".info-box");
+
+
+    infoBoxes[0].querySelector("span")
+        .textContent = product.light;
+
+
+    infoBoxes[1].querySelector("span")
+        .textContent = product.water;
+
+
+    infoBoxes[2].querySelector("span")
+        .textContent = product.size;
+
+
+    infoBoxes[3].querySelector("span")
+        .textContent = product.environment;
+
+}
+
+
+// ------------------------------------------
+// CHANGE QUANTITY
 // ------------------------------------------
 
 function changeProductQuantity(amount) {
 
     productQuantity += amount;
+
 
     if (productQuantity < 1) {
 
@@ -452,24 +547,30 @@ function changeProductQuantity(amount) {
 
     }
 
-    if (productQuantity > 20) {
 
-        productQuantity = 20;
+    if (productQuantity > product.stock) {
+
+        productQuantity = product.stock;
 
     }
 
+
     document.getElementById(
         "product-quantity"
-    ).textContent = productQuantity;
+    ).textContent =
+        productQuantity;
 
 }
 
 
 // ------------------------------------------
-// ADD PRODUCT
+// ADD PRODUCT TO CART
 // ------------------------------------------
 
 function addProductToCart() {
+
+    if (!product) return;
+
 
     for (
         let i = 0;
@@ -478,21 +579,23 @@ function addProductToCart() {
     ) {
 
         addToCart(
-            "Peace Lily",
-            1500
+            product.name,
+            product.price
         );
 
     }
 
+
     alert(
         productQuantity +
-        " Peace Lily added to your cart."
+        " " +
+        product.name +
+        " added to your cart."
     );
 
 }
 
 </script>
-
 
 </body>
 
