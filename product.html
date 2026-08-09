@@ -27,15 +27,21 @@
         }
 
         .product-photo {
-            min-height: 550px;
-            border-radius: 25px;
-            background: #eef6ef;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 180px;
-        }
+    min-height: 550px;
+    border-radius: 25px;
+    background: #eef6ef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
 
+.product-photo img {
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+    display: block;
+}
         .product-details {
             padding-top: 20px;
         }
@@ -252,9 +258,12 @@
 
             <div class="product-photo">
 
-                🌿
+    <img
+        id="product-image"
+        src=""
+        alt="Plant">
 
-            </div>
+</div>
 
 
             <!-- DETAILS -->
