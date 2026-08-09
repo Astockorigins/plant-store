@@ -512,11 +512,14 @@ if (product) {
         product.description;
 
 
-    const productPhoto =
-        document.querySelector(".product-photo");
+    const productImage =
+    document.getElementById("product-image");
 
-    productPhoto.textContent =
-        product.image;
+productImage.src =
+    product.image;
+
+productImage.alt =
+    product.name;
 
 
     const infoBoxes =
