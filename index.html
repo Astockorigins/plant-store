@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Plant Store | Beautiful Plants for Your Home</title>
+
+    <meta name="description"
+          content="Shop beautiful indoor and outdoor plants from our online plant nursery.">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <div class="container nav">
+
+            <a href="index.html" class="logo">
+                🌿 Plant Store
+            </a>
+
+            <nav>
+                <a href="#home">Home</a>
+                <a href="#shop">Shop</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <a href="cart.html" class="cart-link">
+                    🛒 Cart <span id="cart-count">0</span>
+                </a>
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- HERO -->
+    <section id="home" class="hero">
+
+        <div class="hero-content">
+
+            <p class="hero-small">WELCOME TO OUR NURSERY</p>
+
+            <h1>
+                Bring Nature<br>
+                <span>Into Your Home</span>
+            </h1>
+
+            <p>
+                Beautiful, healthy plants carefully grown
+                and ready for your home or garden.
+            </p>
+
+            <a href="#shop" class="btn">
+                Shop Plants
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- CATEGORIES -->
+    <section class="categories">
+
+        <div class="container">
+
+            <h2>Shop by Category</h2>
+
+            <div class="category-grid">
+
+                <div class="category">
+                    <div class="category-icon">🪴</div>
+                    <h3>Indoor Plants</h3>
+                    <p>Beautiful plants for your home.</p>
+                </div>
+
+                <div class="category">
+                    <div class="category-icon">🌳</div>
+                    <h3>Outdoor Plants</h3>
+                    <p>Plants for gardens and landscapes.</p>
+                </div>
+
+                <div class="category">
+                    <div class="category-icon">🌺</div>
+                    <h3>Flowering Plants</h3>
+                    <p>Add colour and beauty to your space.</p>
+                </div>
+
+                <div class="category">
+                    <div class="category-icon">🌵</div>
+                    <h3>Succulents</h3>
+                    <p>Easy-care plants for every home.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PRODUCTS -->
+    <section id="shop" class="products">
+
+        <div class="container">
+
+            <div class="section-heading">
+
+                <div>
+                    <p class="section-small">OUR COLLECTION</p>
+                    <h2>Featured Plants</h2>
+                </div>
+
+                <a href="#" class="view-all">View All →</a>
+
+            </div>
+
+
+            <div class="product-grid">
+
+                <!-- PRODUCT 1 -->
+                <article class="product-card">
+
+                    <div class="product-image">
+                        🌿
+                    </div>
+
+                    <div class="product-info">
+
+                        <span class="category-name">
+                            Indoor Plant
+                        </span>
+
+                        <h3>Peace Lily</h3>
+
+                        <p class="product-description">
+                            A beautiful indoor plant that
+                            brings freshness to your home.
+                        </p>
+
+                        <div class="product-bottom">
+
+                            <strong>KSh 1,500</strong>
+
+                            <button
+                                onclick="addToCart('Peace Lily', 1500)"
+                                class="add-btn">
+                                Add to Cart
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PRODUCT 2 -->
+                <article class="product-card">
+
+                    <div class="product-image">
+                        🌴
+                    </div>
+
+                    <div class="product-info">
+
+                        <span class="category-name">
+                            Outdoor Plant
+                        </span>
+
+                        <h3>Areca Palm</h3>
+
+                        <p class="product-description">
+                            A tropical palm perfect for
+                            homes, offices and gardens.
+                        </p>
+
+                        <div class="product-bottom">
+
+                            <strong>KSh 2,500</strong>
+
+                            <button
+                                onclick="addToCart('Areca Palm', 2500)"
+                                class="add-btn">
+                                Add to Cart
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PRODUCT 3 -->
+                <article class="product-card">
+
+                    <div class="product-image">
+                        🌺
+                    </div>
+
+                    <div class="product-info">
+
+                        <span class="category-name">
+                            Flowering Plant
+                        </span>
+
+                        <h3>Hibiscus</h3>
+
+                        <p class="product-description">
+                            Bright flowering plants that
+                            transform your garden.
+                        </p>
+
+                        <div class="product-bottom">
+
+                            <strong>KSh 800</strong>
+
+                            <button
+                                onclick="addToCart('Hibiscus', 800)"
+                                class="add-btn">
+                                Add to Cart
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PRODUCT 4 -->
+                <article class="product-card">
+
+                    <div class="product-image">
+                        🌵
+                    </div>
+
+                    <div class="product-info">
+
+                        <span class="category-name">
+                            Succulent
+                        </span>
+
+                        <h3>Aloe Vera</h3>
+
+                        <p class="product-description">
+                            A hardy, attractive plant that
+                            requires very little maintenance.
+                        </p>
+
+                        <div class="product-bottom">
+
+                            <strong>KSh 500</strong>
+
+                            <button
+                                onclick="addToCart('Aloe Vera', 500)"
+                                class="add-btn">
+                                Add to Cart
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+    <section id="about" class="about">
+
+        <div class="container about-content">
+
+            <div>
+                <p class="section-small">ABOUT OUR NURSERY</p>
+
+                <h2>Growing Plants With Care</h2>
+            </div>
+
+            <p>
+                We grow and supply beautiful plants for homes,
+                offices, gardens and landscaping projects.
+                Every plant is selected and cared for with
+                attention so that it reaches you healthy and ready
+                to grow.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- CTA -->
+    <section class="cta">
+
+        <div class="container">
+
+            <h2>Ready to Bring More Green Into Your Life?</h2>
+
+            <p>
+                Explore our collection and find your perfect plant.
+            </p>
+
+            <a href="#shop" class="btn">
+                Explore Plants
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact">
+
+        <div class="container">
+
+            <p class="section-small">GET IN TOUCH</p>
+
+            <h2>Contact Our Nursery</h2>
+
+            <p>
+                Have a question about a plant or delivery?
+                Contact us and we'll be happy to help.
+            </p>
+
+            <div class="contact-details">
+
+                <p>📞 Phone: +254 XXX XXX XXX</p>
+
+                <p>💬 WhatsApp: +254 XXX XXX XXX</p>
+
+                <p>📧 Email: info@example.com</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="container footer-content">
+
+            <div>
+                <h3>🌿 Plant Store</h3>
+
+                <p>
+                    Beautiful plants for beautiful spaces.
+                </p>
+            </div>
+
+            <p>
+                © 2026 Plant Store. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
