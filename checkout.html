@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | Plant Store</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+    <style>
+
+        .checkout-page {
+            padding: 70px 0 100px;
+        }
+
+        .checkout-header {
+            margin-bottom: 40px;
+        }
+
+        .checkout-header h1 {
+            font-size: 45px;
+            margin-bottom: 8px;
+        }
+
+        .checkout-header p {
+            color: #718078;
+        }
+
+
+        .checkout-layout {
+            display: grid;
+            grid-template-columns:
+                1fr 380px;
+            gap: 45px;
+            align-items: start;
+        }
+
+
+        /* FORM */
+
+        .checkout-form {
+            border: 1px solid #e5ebe6;
+            border-radius: 18px;
+            padding: 30px;
+        }
+
+        .checkout-form h2 {
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+
+            width: 100%;
+
+            padding: 13px 15px;
+
+            border: 1px solid #dce5de;
+
+            border-radius: 10px;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+            outline: none;
+
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+
+            border-color: #2e7d4a;
+
+        }
+
+        .form-group textarea {
+
+            min-height: 100px;
+
+            resize: vertical;
+
+        }
+
+
+        .form-row {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 15px;
+
+        }
+
+
+        /* DELIVERY */
+
+        .delivery-options {
+
+            display: grid;
+
+            gap: 10px;
+
+            margin-top: 10px;
+
+        }
+
+        .delivery-option {
+
+            border: 1px solid #dce5de;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+        }
+
+        .delivery-option:hover {
+
+            border-color: #2e7d4a;
+
+        }
+
+        .delivery-option input {
+
+            margin-right: 8px;
+
+        }
+
+
+        /* ORDER SUMMARY */
+
+        .order-summary {
+
+            background: #f6faf7;
+
+            border: 1px solid #e5ebe6;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            position: sticky;
+
+            top: 100px;
+
+        }
+
+        .order-summary h2 {
+
+            margin-bottom: 20px;
+
+        }
+
+        .checkout-item {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding: 12px 0;
+
+            border-bottom: 1px solid #dfe8e1;
+
+        }
+
+        .checkout-item-name {
+
+            font-weight: 600;
+
+        }
+
+        .checkout-item-quantity {
+
+            color: #718078;
+
+            font-size: 13px;
+
+        }
+
+
+        .summary-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 12px 0;
+
+        }
+
+        .summary-total {
+
+            border-top: 1px solid #d5dfd7;
+
+            margin-top: 10px;
+
+            padding-top: 20px;
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            color: #245c39;
+
+        }
+
+
+        .place-order-btn {
+
+            width: 100%;
+
+            border: none;
+
+            background: #2e7d4a;
+
+            color: white;
+
+            padding: 16px;
+
+            border-radius: 30px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            margin-top: 20px;
+
+        }
+
+        .place-order-btn:hover {
+
+            background: #245c39;
+
+        }
+
+
+        .empty-checkout {
+
+            text-align: center;
+
+            padding: 80px 20px;
+
+        }
+
+
+        @media (max-width: 850px) {
+
+            .checkout-layout {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .order-summary {
+
+                position: static;
+
+            }
+
+        }
+
+
+        @media (max-width: 550px) {
+
+            .form-row {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .checkout-form {
+
+                padding: 20px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <div class="container nav">
+
+        <a href="index.html"
+           class="logo">
+
+            🌿 Plant Store
+
+        </a>
+
+
+        <nav>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="shop.html">
+                Shop
+            </a>
+
+            <a href="index.html#about">
+                About
+            </a>
+
+            <a href="index.html#contact">
+                Contact
+            </a>
+
+            <a href="cart.html"
+               class="cart-link">
+
+                🛒 Cart
+
+                <span id="cart-count">
+                    0
+                </span>
+
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- CHECKOUT -->
+
+<main class="checkout-page">
+
+    <div class="container">
+
+
+        <div class="checkout-header">
+
+            <h1>
+                Checkout
+            </h1>
+
+            <p>
+                Enter your details and delivery
+                information to place your order.
+            </p>
+
+        </div>
+
+
+        <div
+            id="checkout-container">
+
+
+            <div class="checkout-layout">
+
+
+                <!-- CUSTOMER FORM -->
+
+                <form
+                    class="checkout-form"
+                    id="checkout-form">
+
+
+                    <h2>
+                        Your Information
+                    </h2>
+
+
+                    <div class="form-row">
+
+
+                        <div class="form-group">
+
+                            <label for="first-name">
+                                First Name *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="first-name"
+                                required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="last-name">
+                                Last Name *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="last-name"
+                                required>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Phone Number *
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            placeholder="07XXXXXXXX"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="you@example.com">
+
+                    </div>
+
+
+                    <h2 style="margin-top:35px;">
+
+                        Delivery Information
+
+                    </h2>
+
+
+                    <div class="form-group">
+
+                        <label for="area">
+                            Delivery Area *
+                        </label>
+
+                        <select
+                            id="area"
+                            required>
+
+                            <option value="">
+                                Select delivery area
+                            </option>
+
+                            <option value="Nairobi">
+                                Nairobi
+                            </option>
+
+                            <option value="Kiambu">
+                                Kiambu
+                            </option>
+
+                            <option value="Kajiado">
+                                Kajiado
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="address">
+                            Delivery Address *
+                        </label>
+
+                        <textarea
+                            id="address"
+                            placeholder="Estate, building, street, landmark..."
+                            required></textarea>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Delivery Method *
+                        </label>
+
+
+                        <div class="delivery-options">
+
+
+                            <label
+                                class="delivery-option">
+
+                                <input
+                                    type="radio"
+                                    name="delivery"
+                                    value="delivery"
+                                    checked>
+
+                                Home Delivery
+
+                            </label>
+
+
+                            <label
+                                class="delivery-option">
+
+                                <input
+                                    type="radio"
+                                    name="delivery"
+                                    value="pickup">
+
+                                Nursery Pickup
+
+                            </label>
+
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="notes">
+                            Order Notes
+                        </label>
+
+                        <textarea
+                            id="notes"
+                            placeholder="Any special instructions?"></textarea>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="place-order-btn">
+
+                        Place Order
+
+                    </button>
+
+
+                </form>
+
+
+                <!-- SUMMARY -->
+
+                <aside
+                    class="order-summary">
+
+                    <h2>
+                        Your Order
+                    </h2>
+
+
+                    <div
+                        id="checkout-items">
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Subtotal
+                        </span>
+
+                        <strong id="checkout-subtotal">
+                            KSh 0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Delivery
+                        </span>
+
+                        <strong id="checkout-delivery">
+                            Calculated
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row summary-total">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <span id="checkout-total">
+                            KSh 0
+                        </span>
+
+                    </div>
+
+
+                </aside>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <div class="container footer-content">
+
+        <div>
+
+            <h3>
+                🌿 Plant Store
+            </h3>
+
+            <p>
+                Beautiful plants for beautiful spaces.
+            </p>
+
+        </div>
+
+        <p>
+            © 2026 Plant Store.
+            All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+
+<script>
+
+
+// ==========================================
+// CHECK CART
+// ==========================================
+
+if (cart.length === 0) {
+
+    document.getElementById(
+        "checkout-container"
+    ).innerHTML = `
+
+        <div class="empty-checkout">
+
+            <div style="font-size:70px;">
+                🛒
+            </div>
+
+            <h2>
+                Your cart is empty
+            </h2>
+
+            <p>
+                Add some beautiful plants
+                before checking out.
+            </p>
+
+            <br>
+
+            <a
+                href="shop.html"
+                class="btn">
+
+                Shop Plants
+
+            </a>
+
+        </div>
+
+    `;
+
+}
+
+
+// ==========================================
+// DISPLAY ORDER
+// ==========================================
+
+function displayCheckout() {
+
+    if (cart.length === 0) return;
+
+
+    const itemsContainer =
+        document.getElementById(
+            "checkout-items"
+        );
+
+
+    itemsContainer.innerHTML = "";
+
+
+    cart.forEach(item => {
+
+        const itemTotal =
+            item.price * item.quantity;
+
+
+        const itemElement =
+            document.createElement("div");
+
+
+        itemElement.className =
+            "checkout-item";
+
+
+        itemElement.innerHTML = `
+
+            <div>
+
+                <div class="checkout-item-name">
+
+                    ${item.name}
+
+                </div>
+
+                <div class="checkout-item-quantity">
+
+                    Quantity: ${item.quantity}
+
+                </div>
+
+            </div>
+
+
+            <strong>
+
+                KSh
+                ${itemTotal.toLocaleString()}
+
+            </strong>
+
+        `;
+
+
+        itemsContainer.appendChild(
+            itemElement
+        );
+
+    });
+
+
+    const subtotal =
+        getCartTotal();
+
+
+    document.getElementById(
+        "checkout-subtotal"
+    ).textContent =
+        "KSh " +
+        subtotal.toLocaleString();
+
+
+    document.getElementById(
+        "checkout-total"
+    ).textContent =
+        "KSh " +
+        subtotal.toLocaleString();
+
+}
+
+
+// ==========================================
+// PLACE ORDER
+// ==========================================
+
+document.getElementById(
+    "checkout-form"
+).addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+
+        const firstName =
+            document.getElementById(
+                "first-name"
+            ).value.trim();
+
+
+        const lastName =
+            document.getElementById(
+                "last-name"
+            ).value.trim();
+
+
+        const phone =
+            document.getElementById(
+                "phone"
+            ).value.trim();
+
+
+        const area =
+            document.getElementById(
+                "area"
+            ).value;
+
+
+        const address =
+            document.getElementById(
+                "address"
+            ).value.trim();
+
+
+        if (
+            !firstName ||
+            !lastName ||
+            !phone ||
+            !area ||
+            !address
+        ) {
+
+            alert(
+                "Please complete all required fields."
+            );
+
+            return;
+
+        }
+
+
+        alert(
+            "Order form completed successfully!"
+        );
+
+
+        // Payment will be added later.
+
+    }
+);
+
+
+// ==========================================
+// START
+// ==========================================
+
+displayCheckout();
+
+updateCartCount();
+
+
+</script>
+
+
+</body>
+
+</html>
