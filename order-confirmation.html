@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Order Confirmation | Plant Store</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+    <style>
+
+        .confirmation-page {
+
+            padding: 80px 20px 100px;
+
+            text-align: center;
+
+        }
+
+        .confirmation-box {
+
+            max-width: 700px;
+
+            margin: auto;
+
+            border: 1px solid #e5ebe6;
+
+            border-radius: 20px;
+
+            padding: 45px;
+
+            background: white;
+
+        }
+
+        .success-icon {
+
+            font-size: 70px;
+
+            margin-bottom: 15px;
+
+        }
+
+        .confirmation-box h1 {
+
+            color: #245c39;
+
+            margin-bottom: 10px;
+
+        }
+
+        .order-number {
+
+            display: inline-block;
+
+            background: #eef6ef;
+
+            color: #245c39;
+
+            padding: 10px 18px;
+
+            border-radius: 20px;
+
+            font-weight: bold;
+
+            margin: 15px 0 30px;
+
+        }
+
+        .order-items {
+
+            text-align: left;
+
+            border-top: 1px solid #e5ebe6;
+
+            border-bottom: 1px solid #e5ebe6;
+
+            padding: 15px 0;
+
+            margin-bottom: 20px;
+
+        }
+
+        .order-item {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 10px 0;
+
+        }
+
+        .confirmation-total {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            color: #245c39;
+
+            margin-bottom: 30px;
+
+        }
+
+        .confirmation-buttons {
+
+            display: flex;
+
+            gap: 12px;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+        }
+
+        .confirmation-buttons a {
+
+            text-decoration: none;
+
+            padding: 13px 22px;
+
+            border-radius: 25px;
+
+            font-weight: bold;
+
+        }
+
+        .continue-shopping {
+
+            background: #2e7d4a;
+
+            color: white;
+
+        }
+
+        .home-button {
+
+            border: 1px solid #2e7d4a;
+
+            color: #2e7d4a;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+    <div class="container nav">
+
+        <a href="index.html"
+           class="logo">
+
+            🌿 Plant Store
+
+        </a>
+
+        <nav>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="shop.html">
+                Shop
+            </a>
+
+            <a href="cart.html">
+                🛒 Cart
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main class="confirmation-page">
+
+    <div
+        class="confirmation-box"
+        id="confirmation-box">
+
+        <div class="success-icon">
+            🌿
+        </div>
+
+        <h1>
+            Order Received!
+        </h1>
+
+        <p>
+            Thank you for choosing our plants.
+        </p>
+
+
+        <div
+            class="order-number"
+            id="order-number">
+
+        </div>
+
+
+        <div
+            class="order-items"
+            id="order-items">
+
+        </div>
+
+
+        <div
+            class="confirmation-total">
+
+            <span>
+                Total
+            </span>
+
+            <span id="order-total">
+                KSh 0
+            </span>
+
+        </div>
+
+
+        <p>
+            Your order is currently
+            <strong>Pending Payment</strong>.
+        </p>
+
+
+        <div class="confirmation-buttons">
+
+            <a
+                href="shop.html"
+                class="continue-shopping">
+
+                Continue Shopping
+
+            </a>
+
+
+            <a
+                href="index.html"
+                class="home-button">
+
+                Back Home
+
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <div class="container footer-content">
+
+        <p>
+            © 2026 Plant Store.
+            All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script>
+
+
+// Get saved order
+
+const savedOrder =
+    localStorage.getItem(
+        "currentOrder"
+    );
+
+
+if (!savedOrder) {
+
+    document.getElementById(
+        "confirmation-box"
+    ).innerHTML = `
+
+        <h1>
+            No Order Found
+        </h1>
+
+        <p>
+            Please return to the shop.
+        </p>
+
+        <br>
+
+        <a href="shop.html">
+            Shop Plants
+        </a>
+
+    `;
+
+} else {
+
+
+    const order =
+        JSON.parse(savedOrder);
+
+
+    // Order number
+
+    document.getElementById(
+        "order-number"
+    ).textContent =
+        "Order #" +
+        order.orderNumber;
+
+
+    // Items
+
+    const itemsContainer =
+        document.getElementById(
+            "order-items"
+        );
+
+
+    order.items.forEach(item => {
+
+        const itemElement =
+            document.createElement(
+                "div"
+            );
+
+
+        itemElement.className =
+            "order-item";
+
+
+        itemElement.innerHTML = `
+
+            <span>
+
+                ${item.name}
+                × ${item.quantity}
+
+            </span>
+
+            <strong>
+
+                KSh
+                ${(item.price * item.quantity)
+                    .toLocaleString()}
+
+            </strong>
+
+        `;
+
+
+        itemsContainer.appendChild(
+            itemElement
+        );
+
+    });
+
+
+    // Total
+
+    document.getElementById(
+        "order-total"
+    ).textContent =
+        "KSh " +
+        order.total.toLocaleString();
+
+}
+
+</script>
+
+
+</body>
+
+</html>
