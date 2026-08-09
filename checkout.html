@@ -849,6 +849,12 @@ document.getElementById(
             ).value.trim();
 
 
+        const email =
+            document.getElementById(
+                "email"
+            ).value.trim();
+
+
         const area =
             document.getElementById(
                 "area"
@@ -860,6 +866,20 @@ document.getElementById(
                 "address"
             ).value.trim();
 
+
+        const notes =
+            document.getElementById(
+                "notes"
+            ).value.trim();
+
+
+        const delivery =
+            document.querySelector(
+                'input[name="delivery"]:checked'
+            ).value;
+
+
+        // Check required information
 
         if (
             !firstName ||
@@ -878,12 +898,85 @@ document.getElementById(
         }
 
 
-        alert(
-            "Order form completed successfully!"
+        // Create order number
+
+        const orderNumber =
+            "PL-" +
+            Date.now();
+
+
+        // Calculate total
+
+        const total =
+            getCartTotal();
+
+
+        // Create order object
+
+        const order = {
+
+            orderNumber:
+                orderNumber,
+
+            customer: {
+
+                firstName:
+                    firstName,
+
+                lastName:
+                    lastName,
+
+                phone:
+                    phone,
+
+                email:
+                    email
+
+            },
+
+            delivery: {
+
+                area:
+                    area,
+
+                address:
+                    address,
+
+                method:
+                    delivery
+
+            },
+
+            notes:
+                notes,
+
+            items:
+                cart,
+
+            total:
+                total,
+
+            status:
+                "Pending Payment",
+
+            date:
+                new Date().toISOString()
+
+        };
+
+
+        // Save temporary order
+
+        localStorage.setItem(
+            "currentOrder",
+            JSON.stringify(order)
         );
 
 
-        // Payment will be added later.
+        // Go to confirmation page
+
+        window.location.href =
+            "order-confirmation.html";
 
     }
 );
