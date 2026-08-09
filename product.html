@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Peace Lily | Plant Store</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+    <style>
+
+        .product-page {
+            padding: 80px 0;
+        }
+
+        .product-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            align-items: start;
+        }
+
+        .product-photo {
+            min-height: 550px;
+            border-radius: 25px;
+            background: #eef6ef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 180px;
+        }
+
+        .product-details {
+            padding-top: 20px;
+        }
+
+        .product-category {
+            color: #6e8876;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .product-details h1 {
+            font-size: 52px;
+            line-height: 1.1;
+            margin: 12px 0 15px;
+        }
+
+        .product-price {
+            font-size: 27px;
+            color: #245c39;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .stock {
+            display: inline-block;
+            padding: 7px 14px;
+            background: #e5f4e8;
+            color: #277342;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .product-details > p {
+            color: #65736a;
+            font-size: 17px;
+            margin-bottom: 30px;
+        }
+
+        .plant-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .info-box {
+            padding: 18px;
+            background: #f6faf7;
+            border-radius: 12px;
+        }
+
+        .info-box strong {
+            display: block;
+            color: #245c39;
+            margin-bottom: 5px;
+        }
+
+        .info-box span {
+            font-size: 14px;
+            color: #6c796f;
+        }
+
+        .quantity {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .quantity button {
+            width: 38px;
+            height: 38px;
+            border: none;
+            border-radius: 50%;
+            background: #eef6ef;
+            color: #245c39;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .quantity span {
+            font-weight: bold;
+            min-width: 25px;
+            text-align: center;
+        }
+
+        .product-add {
+            width: 100%;
+            border: none;
+            padding: 17px;
+            border-radius: 30px;
+            background: #2e7d4a;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .product-add:hover {
+            background: #245c39;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 35px;
+            color: #2e7d4a;
+            font-weight: bold;
+        }
+
+
+        @media (max-width: 800px) {
+
+            .product-detail {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .product-photo {
+                min-height: 400px;
+                font-size: 130px;
+            }
+
+            .product-details h1 {
+                font-size: 40px;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .plant-info {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <div class="container nav">
+
+        <a href="index.html"
+           class="logo">
+
+            🌿 Plant Store
+
+        </a>
+
+        <nav>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="index.html#shop">
+                Shop
+            </a>
+
+            <a href="index.html#about">
+                About
+            </a>
+
+            <a href="index.html#contact">
+                Contact
+            </a>
+
+            <a href="cart.html"
+               class="cart-link">
+
+                🛒 Cart
+                <span id="cart-count">0</span>
+
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- PRODUCT -->
+
+<main class="product-page">
+
+    <div class="container">
+
+        <a href="index.html#shop"
+           class="back-link">
+
+            ← Back to Shop
+
+        </a>
+
+
+        <div class="product-detail">
+
+
+            <!-- IMAGE -->
+
+            <div class="product-photo">
+
+                🌿
+
+            </div>
+
+
+            <!-- DETAILS -->
+
+            <div class="product-details">
+
+                <span class="product-category">
+
+                    Indoor Plant
+
+                </span>
+
+
+                <h1>
+
+                    Peace Lily
+
+                </h1>
+
+
+                <div class="product-price">
+
+                    KSh 1,500
+
+                </div>
+
+
+                <span class="stock">
+
+                    ✓ In Stock
+
+                </span>
+
+
+                <p>
+
+                    The Peace Lily is a beautiful,
+                    elegant indoor plant that brings
+                    a fresh natural feeling into your
+                    home or office.
+
+                    It is easy to care for and works
+                    well in bright indirect light.
+
+                </p>
+
+
+                <!-- PLANT INFORMATION -->
+
+                <div class="plant-info">
+
+
+                    <div class="info-box">
+
+                        <strong>☀️ Light</strong>
+
+                        <span>
+                            Bright indirect light
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <strong>💧 Water</strong>
+
+                        <span>
+                            Moderate watering
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <strong>🪴 Size</strong>
+
+                        <span>
+                            Medium
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <strong>🌡️ Environment</strong>
+
+                        <span>
+                            Indoor
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUANTITY -->
+
+                <div class="quantity">
+
+                    <span>Quantity:</span>
+
+                    <button
+                        onclick="changeProductQuantity(-1)">
+
+                        −
+
+                    </button>
+
+                    <span id="product-quantity">
+
+                        1
+
+                    </span>
+
+                    <button
+                        onclick="changeProductQuantity(1)">
+
+                        +
+
+                    </button>
+
+                </div>
+
+
+                <!-- ADD TO CART -->
+
+                <button
+                    class="product-add"
+                    onclick="addProductToCart()">
+
+                    🛒 Add to Cart
+
+                </button>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <div class="container footer-content">
+
+        <div>
+
+            <h3>
+                🌿 Plant Store
+            </h3>
+
+            <p>
+                Beautiful plants for beautiful spaces.
+            </p>
+
+        </div>
+
+        <p>
+            © 2026 Plant Store. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+
+<script>
+
+let productQuantity = 1;
+
+
+// ------------------------------------------
+// CHANGE PRODUCT QUANTITY
+// ------------------------------------------
+
+function changeProductQuantity(amount) {
+
+    productQuantity += amount;
+
+    if (productQuantity < 1) {
+
+        productQuantity = 1;
+
+    }
+
+    if (productQuantity > 20) {
+
+        productQuantity = 20;
+
+    }
+
+    document.getElementById(
+        "product-quantity"
+    ).textContent = productQuantity;
+
+}
+
+
+// ------------------------------------------
+// ADD PRODUCT
+// ------------------------------------------
+
+function addProductToCart() {
+
+    for (
+        let i = 0;
+        i < productQuantity;
+        i++
+    ) {
+
+        addToCart(
+            "Peace Lily",
+            1500
+        );
+
+    }
+
+    alert(
+        productQuantity +
+        " Peace Lily added to your cart."
+    );
+
+}
+
+</script>
+
+
+</body>
+
+</html>
