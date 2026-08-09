@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Shopping Cart | Plant Store</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .cart-page {
+            padding: 80px 0;
+            min-height: 70vh;
+        }
+
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 22px;
+            border: 1px solid #e5ebe6;
+            border-radius: 15px;
+            background: white;
+        }
+
+        .cart-item-info h3 {
+            margin-bottom: 5px;
+        }
+
+        .cart-item-info p {
+            color: #718078;
+            font-size: 14px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-controls button {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 50%;
+            background: #eef6ef;
+            color: #245c39;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .quantity-controls span {
+            min-width: 25px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .remove-btn {
+            border: none;
+            background: transparent;
+            color: #b94a48;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .cart-summary {
+            padding: 30px;
+            border-radius: 18px;
+            background: #f6faf7;
+            border: 1px solid #e5ebe6;
+        }
+
+        .cart-summary h2 {
+            margin-bottom: 25px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+        }
+
+        .summary-total {
+            border-top: 1px solid #d9e3dc;
+            margin-top: 15px;
+            padding-top: 20px;
+            font-size: 21px;
+            font-weight: bold;
+            color: #245c39;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            border: none;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 30px;
+            background: #2e7d4a;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .checkout-btn:hover {
+            background: #245c39;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .empty-cart-icon {
+            font-size: 70px;
+            margin-bottom: 20px;
+        }
+
+        .empty-cart h2 {
+            margin-bottom: 10px;
+        }
+
+        .empty-cart p {
+            color: #718078;
+            margin-bottom: 25px;
+        }
+
+
+        @media (max-width: 800px) {
+
+            .cart-layout {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .cart-item-controls {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <div class="container nav">
+
+        <a href="index.html" class="logo">
+            🌿 Plant Store
+        </a>
+
+        <nav>
+
+            <a href="index.html">Home</a>
+
+            <a href="index.html#shop">
+                Shop
+            </a>
+
+            <a href="index.html#about">
+                About
+            </a>
+
+            <a href="index.html#contact">
+                Contact
+            </a>
+
+            <a href="cart.html" class="cart-link">
+                🛒 Cart
+                <span id="cart-count">0</span>
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- CART -->
+
+<main class="cart-page">
+
+    <div class="container">
+
+        <h1>Shopping Cart</h1>
+
+        <p style="color:#718078; margin-bottom:40px;">
+            Review your plants before checkout.
+        </p>
+
+
+        <div id="cart-container"></div>
+
+    </div>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <div class="container footer-content">
+
+        <div>
+
+            <h3>🌿 Plant Store</h3>
+
+            <p>
+                Beautiful plants for beautiful spaces.
+            </p>
+
+        </div>
+
+        <p>
+            © 2026 Plant Store. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+
+<script>
+
+
+// ==========================================
+// DISPLAY CART
+// ==========================================
+
+function displayCart() {
+
+    const container =
+        document.getElementById("cart-container");
+
+
+    if (cart.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="empty-cart">
+
+                <div class="empty-cart-icon">
+                    🪴
+                </div>
+
+                <h2>Your cart is empty</h2>
+
+                <p>
+                    You haven't added any plants yet.
+                </p>
+
+                <a href="index.html#shop"
+                   class="btn">
+
+                    Start Shopping
+
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    let itemsHTML = "";
+
+
+    cart.forEach(item => {
+
+        const itemTotal =
+            item.price * item.quantity;
+
+
+        itemsHTML += `
+
+            <div class="cart-item">
+
+                <div class="cart-item-info">
+
+                    <h3>
+                        ${item.name}
+                    </h3>
+
+                    <p>
+                        KSh ${item.price.toLocaleString()}
+                        each
+                    </p>
+
+                </div>
+
+
+                <div class="cart-item-controls">
+
+                    <div class="quantity-controls">
+
+                        <button
+                            onclick="changeQuantity(
+                                '${item.name}', -1
+                            )">
+
+                            −
+
+                        </button>
+
+                        <span>
+                            ${item.quantity}
+                        </span>
+
+                        <button
+                            onclick="changeQuantity(
+                                '${item.name}', 1
+                            )">
+
+                            +
+
+                        </button>
+
+                    </div>
+
+
+                    <strong>
+                        KSh ${itemTotal.toLocaleString()}
+                    </strong>
+
+
+                    <button
+                        class="remove-btn"
+                        onclick="removeFromCart(
+                            '${item.name}'
+                        )">
+
+                        Remove
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+
+    const total = getCartTotal();
+
+
+    container.innerHTML = `
+
+        <div class="cart-layout">
+
+            <div class="cart-items">
+
+                ${itemsHTML}
+
+            </div>
+
+
+            <aside class="cart-summary">
+
+                <h2>Order Summary</h2>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong>
+                        KSh ${total.toLocaleString()}
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Delivery
+                    </span>
+
+                    <span>
+                        Calculated at checkout
+                    </span>
+
+                </div>
+
+
+                <div class="summary-row summary-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <span>
+                        KSh ${total.toLocaleString()}
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="checkout-btn"
+                    onclick="goToCheckout()">
+
+                    Proceed to Checkout
+
+                </button>
+
+            </aside>
+
+        </div>
+
+    `;
+
+}
+
+
+// ==========================================
+// CHECKOUT BUTTON
+// ==========================================
+
+function goToCheckout() {
+
+    if (cart.length === 0) {
+
+        alert("Your cart is empty.");
+
+        return;
+
+    }
+
+    alert(
+        "Checkout will be added in the next step."
+    );
+
+}
+
+
+// ==========================================
+// LOAD CART
+// ==========================================
+
+displayCart();
+
+updateCartCount();
+
+
+</script>
+
+
+</body>
+
+</html>
