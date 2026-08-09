@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Shop Plants | Plant Store</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+    <style>
+
+        .shop-page {
+            padding: 70px 0 100px;
+        }
+
+        .shop-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .shop-header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .shop-header p {
+            color: #718078;
+        }
+
+
+        /* SEARCH */
+
+        .shop-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 1px solid #dce5de;
+            border-radius: 30px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: #2e7d4a;
+        }
+
+
+        /* CATEGORY FILTERS */
+
+        .category-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 11px 18px;
+            border: 1px solid #dce5de;
+            border-radius: 25px;
+            background: white;
+            color: #34453a;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #2e7d4a;
+            color: white;
+            border-color: #2e7d4a;
+        }
+
+
+        /* SHOP GRID */
+
+        .shop-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(4, 1fr);
+            gap: 25px;
+        }
+
+
+        .shop-card {
+            border: 1px solid #e5ebe6;
+            border-radius: 18px;
+            overflow: hidden;
+            background: white;
+            transition: 0.3s;
+        }
+
+        .shop-card:hover {
+            transform: translateY(-6px);
+            box-shadow:
+                0 15px 35px rgba(0,0,0,0.08);
+        }
+
+
+        .shop-image {
+            height: 260px;
+            background: #eef6ef;
+            overflow: hidden;
+        }
+
+        .shop-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: 0.4s;
+        }
+
+        .shop-card:hover
+        .shop-image img {
+            transform: scale(1.05);
+        }
+
+
+        .shop-info {
+            padding: 20px;
+        }
+
+        .shop-category {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #6e8876;
+            font-weight: bold;
+        }
+
+        .shop-info h3 {
+            margin: 6px 0;
+            font-size: 21px;
+        }
+
+        .shop-price {
+            color: #245c39;
+            font-weight: bold;
+            font-size: 17px;
+            margin-bottom: 15px;
+        }
+
+
+        .shop-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .details-btn,
+        .shop-add-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 22px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .details-btn {
+            border: 1px solid #2e7d4a;
+            color: #2e7d4a;
+            background: white;
+        }
+
+        .shop-add-btn {
+            border: none;
+            color: white;
+            background: #2e7d4a;
+        }
+
+        .shop-add-btn:hover {
+            background: #245c39;
+        }
+
+
+        /* NO RESULTS */
+
+        .no-results {
+            text-align: center;
+            padding: 70px 20px;
+            color: #718078;
+        }
+
+        .no-results-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 1000px) {
+
+            .shop-grid {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 750px) {
+
+            .shop-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .shop-header h1 {
+                font-size: 40px;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .shop-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .shop-image {
+                height: 280px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <div class="container nav">
+
+        <a href="index.html"
+           class="logo">
+
+            🌿 Plant Store
+
+        </a>
+
+
+        <nav>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="shop.html">
+                Shop
+            </a>
+
+            <a href="index.html#about">
+                About
+            </a>
+
+            <a href="index.html#contact">
+                Contact
+            </a>
+
+            <a href="cart.html"
+               class="cart-link">
+
+                🛒 Cart
+
+                <span id="cart-count">
+                    0
+                </span>
+
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- SHOP -->
+
+<main class="shop-page">
+
+    <div class="container">
+
+
+        <div class="shop-header">
+
+            <p class="section-small">
+                OUR PLANT COLLECTION
+            </p>
+
+            <h1>
+                Shop Plants
+            </h1>
+
+            <p>
+                Find the perfect plant for your
+                home, office or garden.
+            </p>
+
+        </div>
+
+
+        <!-- CONTROLS -->
+
+        <div class="shop-controls">
+
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="search-input"
+                    placeholder="🔎 Search plants..."
+                    oninput="filterProducts()">
+
+            </div>
+
+
+            <div class="category-filters">
+
+                <button
+                    class="filter-btn active"
+                    onclick="setCategory('All', this)">
+
+                    All
+
+                </button>
+
+
+                <button
+                    class="filter-btn"
+                    onclick="setCategory(
+                        'Indoor Plant', this
+                    )">
+
+                    Indoor
+
+                </button>
+
+
+                <button
+                    class="filter-btn"
+                    onclick="setCategory(
+                        'Outdoor Plant', this
+                    )">
+
+                    Outdoor
+
+                </button>
+
+
+                <button
+                    class="filter-btn"
+                    onclick="setCategory(
+                        'Flowering Plant', this
+                    )">
+
+                    Flowering
+
+                </button>
+
+
+                <button
+                    class="filter-btn"
+                    onclick="setCategory(
+                        'Succulent', this
+                    )">
+
+                    Succulents
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- PRODUCTS -->
+
+        <div
+            class="shop-grid"
+            id="shop-grid">
+
+        </div>
+
+
+        <!-- NO RESULTS -->
+
+        <div
+            id="no-results"
+            class="no-results"
+            style="display:none;">
+
+            <div class="no-results-icon">
+                🌱
+            </div>
+
+            <h2>
+                No plants found
+            </h2>
+
+            <p>
+                Try another search or category.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <div class="container footer-content">
+
+        <div>
+
+            <h3>
+                🌿 Plant Store
+            </h3>
+
+            <p>
+                Beautiful plants for beautiful spaces.
+            </p>
+
+        </div>
+
+        <p>
+            © 2026 Plant Store.
+            All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<!-- SCRIPTS -->
+
+<script src="script.js"></script>
+
+<script src="products.js"></script>
+
+
+<script>
+
+
+let selectedCategory = "All";
+
+
+// ==========================================
+// DISPLAY PRODUCTS
+// ==========================================
+
+function displayProducts() {
+
+    const grid =
+        document.getElementById("shop-grid");
+
+    const noResults =
+        document.getElementById("no-results");
+
+    const search =
+        document.getElementById(
+            "search-input"
+        ).value
+        .toLowerCase()
+        .trim();
+
+
+    grid.innerHTML = "";
+
+
+    const productList =
+        Object.entries(products);
+
+
+    const filteredProducts =
+        productList.filter(
+            ([id, product]) => {
+
+                const matchesSearch =
+                    product.name
+                        .toLowerCase()
+                        .includes(search);
+
+
+                const matchesCategory =
+                    selectedCategory === "All" ||
+                    product.category ===
+                    selectedCategory;
+
+
+                return (
+                    matchesSearch &&
+                    matchesCategory
+                );
+
+            }
+        );
+
+
+    if (filteredProducts.length === 0) {
+
+        noResults.style.display = "block";
+
+        return;
+
+    }
+
+
+    noResults.style.display = "none";
+
+
+    filteredProducts.forEach(
+        ([id, product]) => {
+
+            const card =
+                document.createElement("article");
+
+            card.className =
+                "shop-card";
+
+
+            card.innerHTML = `
+
+                <div class="shop-image">
+
+                    <img
+                        src="${product.image}"
+                        alt="${product.name}">
+
+                </div>
+
+
+                <div class="shop-info">
+
+                    <span class="shop-category">
+
+                        ${product.category}
+
+                    </span>
+
+
+                    <h3>
+                        ${product.name}
+                    </h3>
+
+
+                    <div class="shop-price">
+
+                        KSh
+                        ${product.price.toLocaleString()}
+
+                    </div>
+
+
+                    <div class="shop-actions">
+
+                        <a
+                            href="product.html?plant=${id}"
+                            class="details-btn">
+
+                            View Details
+
+                        </a>
+
+
+                        <button
+                            class="shop-add-btn"
+                            onclick="
+                                addToCart(
+                                    '${product.name}',
+                                    ${product.price}
+                                )
+                            ">
+
+                            Add to Cart
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            grid.appendChild(card);
+
+        }
+    );
+
+}
+
+
+// ==========================================
+// CATEGORY
+// ==========================================
+
+function setCategory(category, button) {
+
+    selectedCategory = category;
+
+
+    document
+        .querySelectorAll(".filter-btn")
+        .forEach(btn => {
+
+            btn.classList.remove("active");
+
+        });
+
+
+    button.classList.add("active");
+
+
+    displayProducts();
+
+}
+
+
+// ==========================================
+// SEARCH
+// ==========================================
+
+function filterProducts() {
+
+    displayProducts();
+
+}
+
+
+// ==========================================
+// START
+// ==========================================
+
+displayProducts();
+
+updateCartCount();
+
+
+</script>
+
+
+</body>
+
+</html>
