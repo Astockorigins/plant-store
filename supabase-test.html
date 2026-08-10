@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Supabase Test</title>
+
+</head>
+
+<body>
+
+    <h1>Supabase Connection Test</h1>
+
+    <button onclick="testSupabase()">
+        Test Database
+    </button>
+
+    <p id="result">
+        Waiting for test...
+    </p>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="supabase.js"></script>
+
+
+    <script>
+
+        async function testSupabase() {
+
+            const result =
+                document.getElementById(
+                    "result"
+                );
+
+            result.textContent =
+                "Testing...";
+
+
+            const { data, error } =
+                await supabaseClient
+                    .from("orders")
+                    .insert([
+                        {
+
+                            order_number:
+                                "BROWSER-TEST-" +
+                                Date.now(),
+
+                            first_name:
+                                "Browser",
+
+                            last_name:
+                                "Test",
+
+                            phone:
+                                "0700000000",
+
+                            email:
+                                "browser@test.com",
+
+                            area:
+                                "Nairobi",
+
+                            address:
+                                "Browser Test Address",
+
+                            delivery_method:
+                                "pickup",
+
+                            notes:
+                                "Browser connection test",
+
+                            items:
+                                [
+                                    {
+                                        name:
+                                            "Test Plant",
+
+                                        price:
+                                            100,
+
+                                        quantity:
+                                            1
+                                    }
+                                ],
+
+                            total:
+                                100,
+
+                            payment_status:
+                                "pending",
+
+                            order_status:
+                                "new"
+
+                        }
+                    ]);
+
+
+            if (error) {
+
+                console.error(
+                    error
+                );
+
+                result.textContent =
+                    "ERROR: " +
+                    error.message;
+
+                return;
+
+            }
+
+
+            result.textContent =
+                "SUCCESS! The browser can write to Supabase.";
+
+        }
+
+    </script>
+
+</body>
+
+</html>
