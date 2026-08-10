@@ -830,52 +830,49 @@ document.getElementById(
     "checkout-form"
 ).addEventListener(
     "submit",
-    function(event) {
+    async function(event) {
 
         event.preventDefault();
 
+
+        // ==============================
+        // CUSTOMER INFORMATION
+        // ==============================
 
         const firstName =
             document.getElementById(
                 "first-name"
             ).value.trim();
 
-
         const lastName =
             document.getElementById(
                 "last-name"
             ).value.trim();
-
 
         const phone =
             document.getElementById(
                 "phone"
             ).value.trim();
 
-
         const email =
             document.getElementById(
                 "email"
             ).value.trim();
-
 
         const area =
             document.getElementById(
                 "area"
             ).value;
 
-
         const address =
             document.getElementById(
                 "address"
             ).value.trim();
 
-
         const notes =
             document.getElementById(
                 "notes"
             ).value.trim();
-
 
         const delivery =
             document.querySelector(
@@ -883,7 +880,9 @@ document.getElementById(
             ).value;
 
 
-        // Check required information
+        // ==============================
+        // VALIDATION
+        // ==============================
 
         if (
             !firstName ||
@@ -902,89 +901,201 @@ document.getElementById(
         }
 
 
-        // Create order number
+        // ==============================
+        // CHECK CART
+        // ==============================
+
+        if (cart.length === 0) {
+
+            alert(
+                "Your cart is empty."
+            );
+
+            return;
+
+        }
+
+
+        // ==============================
+        // ORDER NUMBER
+        // ==============================
 
         const orderNumber =
             "PL-" +
             Date.now();
 
 
-        // Calculate total
+        // ==============================
+        // TOTAL
+        // ==============================
 
         const total =
             getCartTotal();
 
 
-        // Create order object
+        // ==============================
+        // DISABLE BUTTON
+        // ==============================
 
-        const order = {
+        const button =
+            document.querySelector(
+                ".place-order-btn"
+            );
 
-            orderNumber:
-                orderNumber,
+        button.disabled = true;
 
-            customer: {
-
-                firstName:
-                    firstName,
-
-                lastName:
-                    lastName,
-
-                phone:
-                    phone,
-
-                email:
-                    email
-
-            },
-
-            delivery: {
-
-                area:
-                    area,
-
-                address:
-                    address,
-
-                method:
-                    delivery
-
-            },
-
-            notes:
-                notes,
-
-            items:
-                cart,
-
-            total:
-                total,
-
-            status:
-                "Pending Payment",
-
-            date:
-                new Date().toISOString()
-
-        };
+        button.textContent =
+            "Submitting Order...";
 
 
-        // Save temporary order
+        // ==============================
+        // SEND TO SUPABASE
+        // ==============================
+
+        const { data, error } =
+            await supabaseClient
+                .from("orders")
+                .insert([
+                    {
+
+                        order_number:
+                            orderNumber,
+
+                        first_name:
+                            firstName,
+
+                        last_name:
+                            lastName,
+
+                        phone:
+                            phone,
+
+                        email:
+                            email,
+
+                        area:
+                            area,
+
+                        address:
+                            address,
+
+                        delivery_method:
+                            delivery,
+
+                        notes:
+                            notes,
+
+                        items:
+                            cart,
+
+                        total:
+                            total,
+
+                        payment_status:
+                            "pending",
+
+                        order_status:
+                            "new"
+
+                    }
+                ])
+                .select()
+                .single();
+
+
+        // ==============================
+        // HANDLE ERROR
+        // ==============================
+
+        if (error) {
+
+            console.error(
+                "Supabase error:",
+                error
+            );
+
+            alert(
+                "We could not submit your order. Please try again."
+            );
+
+            button.disabled = false;
+
+            button.textContent =
+                "Place Order";
+
+            return;
+
+        }
+
+
+        // ==============================
+        // SAVE ORDER LOCALLY
+        // ==============================
 
         localStorage.setItem(
             "currentOrder",
-            JSON.stringify(order)
+            JSON.stringify({
+
+                orderNumber:
+                    orderNumber,
+
+                customer: {
+
+                    firstName:
+                        firstName,
+
+                    lastName:
+                        lastName,
+
+                    phone:
+                        phone,
+
+                    email:
+                        email
+
+                },
+
+                delivery: {
+
+                    area:
+                        area,
+
+                    address:
+                        address,
+
+                    method:
+                        delivery
+
+                },
+
+                notes:
+                    notes,
+
+                items:
+                    cart,
+
+                total:
+                    total,
+
+                status:
+                    "Pending Payment",
+
+                date:
+                    new Date().toISOString()
+
+            })
         );
 
 
-        // Go to confirmation page
+        // ==============================
+        // GO TO CONFIRMATION
+        // ==============================
 
         window.location.href =
             "order-confirmation.html";
 
     }
 );
-
 
 // ==========================================
 // START
