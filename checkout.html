@@ -1015,8 +1015,9 @@ document.getElementById(
             );
 
             alert(
-                "We could not submit your order. Please try again."
-            );
+    "Supabase error: " +
+    error.message
+);
 
             button.disabled = false;
 
