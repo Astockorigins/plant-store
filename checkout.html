@@ -952,10 +952,10 @@ document.getElementById(
         // SEND TO SUPABASE
         // ==============================
 
-        const { data, error } =
-            await supabaseClient
-                .from("orders")
-                .insert([
+        const { error } =
+    await supabaseClient
+        .from("orders")
+        .insert([
                     {
 
                         order_number:
