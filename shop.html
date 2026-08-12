@@ -485,7 +485,7 @@ let selectedCategory = "All";
 // DISPLAY PRODUCTS
 // ==========================================
 
-function displayProducts() {
+async function displayProducts() {
 
     const grid =
         document.getElementById("shop-grid");
@@ -504,8 +504,26 @@ function displayProducts() {
     grid.innerHTML = "";
 
 
-    const productList =
-        Object.entries(products);
+    const { data: supabaseProducts, error } =
+    await supabaseClient
+        .from("products")
+        .select("*")
+        .order("id", { ascending: true });
+
+if (error) {
+    console.error("Error loading products:", error);
+    noResults.style.display = "block";
+    return;
+}
+
+const productList =
+    supabaseProducts.map(product => [
+        product.id,
+        {
+            ...product,
+            image: product.image_url
+        }
+    ]);
 
 
     const filteredProducts =
