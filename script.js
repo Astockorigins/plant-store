@@ -133,3 +133,21 @@ function getCartTotal() {
 // ------------------------------------------
 
 updateCartCount();
+// ------------------------------------------
+// SYNC CART WHEN RETURNING TO THE PAGE
+// ------------------------------------------
+
+window.addEventListener("pageshow", function () {
+
+    cart =
+        JSON.parse(
+            localStorage.getItem("plantStoreCart")
+        ) || [];
+
+    updateCartCount();
+
+    if (typeof displayCart === "function") {
+        displayCart();
+    }
+
+});
