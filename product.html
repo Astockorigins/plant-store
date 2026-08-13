@@ -602,6 +602,120 @@ function changeProductQuantity(amount) {
 
     productQuantity += amount;
 
+<script src="script.js"></script>
+<script src="products.js"></script>
+
+<script>
+
+// ==========================================
+// PRODUCT PAGE
+// ==========================================
+
+let productQuantity = 1;
+
+
+// ------------------------------------------
+// GET PRODUCT FROM URL
+// ------------------------------------------
+
+const urlParams =
+    new URLSearchParams(window.location.search);
+
+const productId =
+    urlParams.get("plant") || "peace-lily";
+
+const product =
+    products[productId];
+
+
+// ------------------------------------------
+// CHECK PRODUCT
+// ------------------------------------------
+
+if (!product) {
+
+    alert("Product not found.");
+
+    window.location.href = "index.html";
+
+}
+
+
+// ------------------------------------------
+// UPDATE PRODUCT PAGE
+// ------------------------------------------
+
+if (product) {
+
+    document.title =
+        product.name + " | Plant Store";
+
+
+    document.querySelector(
+        ".product-category"
+    ).textContent =
+        product.category;
+
+
+    document.querySelector(
+        ".product-details h1"
+    ).textContent =
+        product.name;
+
+
+    document.querySelector(
+        ".product-price"
+    ).textContent =
+        "KSh " +
+        product.price.toLocaleString();
+
+
+    document.querySelector(
+        ".product-details > p"
+    ).textContent =
+        product.description;
+
+
+    const productImage =
+        document.getElementById("product-image");
+
+    productImage.src =
+        product.image;
+
+    productImage.alt =
+        product.name;
+
+
+    const infoBoxes =
+        document.querySelectorAll(".info-box");
+
+
+    infoBoxes[0].querySelector("span")
+        .textContent = product.light;
+
+
+    infoBoxes[1].querySelector("span")
+        .textContent = product.water;
+
+
+    infoBoxes[2].querySelector("span")
+        .textContent = product.size;
+
+
+    infoBoxes[3].querySelector("span")
+        .textContent = product.environment;
+
+}
+
+
+// ------------------------------------------
+// CHANGE QUANTITY
+// ------------------------------------------
+
+function changeProductQuantity(amount) {
+
+    productQuantity += amount;
+
 
     if (productQuantity < 1) {
 
