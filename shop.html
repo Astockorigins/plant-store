@@ -517,13 +517,27 @@ if (error) {
 }
 
 const productList =
-    supabaseProducts.map(product => [
-        product.id,
-        {
-            ...product,
-            image: product.image_url
-        }
-    ]);
+    supabaseProducts.map(product => {
+
+        const productKey =
+            product.name
+                .toLowerCase()
+                .replace(/\s+/g, "-");
+
+        const catalogueProduct =
+            products[productKey];
+
+        return [
+            product.id,
+            {
+                ...product,
+                image:
+                    catalogueProduct?.image ||
+                    product.image_url
+            }
+        ];
+
+    });
 
 
     const filteredProducts =
