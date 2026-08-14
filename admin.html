@@ -851,6 +851,11 @@ function filterOrders() {
         "order-status-filter"
     ).value;
 
+    const paymentFilter =
+    document.getElementById(
+        "payment-status-filter"
+    ).value;
+
     const container =
         document.getElementById("orders-container");
 
@@ -883,9 +888,14 @@ const matchesStatus =
     statusFilter === "All" ||
     order.order_status === statusFilter;
 
+const matchesPayment =
+    paymentFilter === "All" ||
+    order.payment_status === paymentFilter;
+
 return (
     matchesSearch &&
-    matchesStatus
+    matchesStatus &&
+    matchesPayment
 );
 
         });
