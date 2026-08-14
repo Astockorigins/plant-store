@@ -465,8 +465,8 @@ allOrders = data;
         "";
 
 
-    data.forEach(
-        order => {
+    allOrders.forEach(
+    order => {
 
             const card =
                 document.createElement(
@@ -746,6 +746,188 @@ async function updateOrder(orderId) {
     await loadOrders();
 
 }
+// ==========================================
+// SEARCH ORDERS
+// ==========================================
+
+function filterOrders() {
+
+    const searchInput =
+        document.getElementById("order-search");
+
+    if (!searchInput) return;
+
+    const search =
+        searchInput.value
+            .toLowerCase()
+            .trim();
+
+    const container =
+        document.getElementById("orders-container");
+
+    const filteredOrders =
+        allOrders.filter(order => {
+
+            const orderNumber =
+                String(order.order_number || "")
+                    .toLowerCase();
+
+            const firstName =
+                String(order.first_name || "")
+                    .toLowerCase();
+
+            const lastName =
+                String(order.last_name || "")
+                    .toLowerCase();
+
+            const phone =
+                String(order.phone || "")
+                    .toLowerCase();
+
+            return (
+                orderNumber.includes(search) ||
+                firstName.includes(search) ||
+                lastName.includes(search) ||
+                phone.includes(search)
+            );
+
+        });
+
+    container.innerHTML = "";
+
+    if (filteredOrders.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty-orders">
+
+                <h2>No matching orders</h2>
+
+                <p>
+                    Try another order number, customer name or phone.
+                </p>
+
+            </div>
+        `;
+
+        return;
+    }
+
+    filteredOrders.forEach(order => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "order-card";
+
+        let itemsHTML = "";
+
+        if (Array.isArray(order.items)) {
+
+            order.items.forEach(item => {
+
+                itemsHTML += `
+
+                    <div class="order-item">
+
+                        <span>
+                            ${item.name}
+                            ×
+                            ${item.quantity}
+                        </span>
+
+                        <strong>
+                            KSh
+                            ${(item.price * item.quantity)
+                                .toLocaleString()}
+                        </strong>
+
+                    </div>
+
+                `;
+
+            });
+
+        }
+
+        const orderDate =
+            new Date(
+                order.created_at
+            ).toLocaleString();
+
+        card.innerHTML = `
+
+            <div class="order-top">
+
+                <div>
+
+                    <div class="order-number">
+                        #${order.order_number}
+                    </div>
+
+                    <small>
+                        ${orderDate}
+                    </small>
+
+                </div>
+
+                <span class="status">
+                    ${order.order_status}
+                </span>
+
+            </div>
+
+            <div class="customer-info">
+
+                <strong>Customer</strong>
+
+                <br>
+
+                ${order.first_name}
+                ${order.last_name}
+
+                <br>
+
+                📞 ${order.phone}
+
+                <br>
+
+                ✉️ ${order.email || "No email"}
+
+                <br>
+
+                📍 ${order.area}
+
+                <br>
+
+                ${order.address}
+
+                <br>
+
+                🚚 ${order.delivery_method}
+
+            </div>
+
+            <div class="order-items">
+                ${itemsHTML}
+            </div>
+
+            <div class="order-total">
+
+                Total:
+                KSh
+                ${Number(order.total).toLocaleString()}
+
+            </div>
+
+        `;
+
+        container.appendChild(card);
+
+    });
+
+}
+
 // ==========================================
 // LOGOUT
 // ==========================================
