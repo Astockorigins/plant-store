@@ -593,6 +593,7 @@ async function loadOrders() {
     }
 
 allOrders = data;
+    updateOrderSummary();
     if (!data || data.length === 0) {
 
         container.innerHTML = `
@@ -615,6 +616,62 @@ allOrders = data;
 
     }
 
+    // ==========================================
+// UPDATE ORDER SUMMARY
+// ==========================================
+
+function updateOrderSummary() {
+
+    const totalOrders =
+        allOrders.length;
+
+    const pendingOrders =
+        allOrders.filter(
+            order =>
+                order.order_status === "new" ||
+                order.order_status === "confirmed" ||
+                order.order_status === "processing"
+        ).length;
+
+    const paidOrders =
+        allOrders.filter(
+            order =>
+                order.payment_status === "paid"
+        ).length;
+
+    const totalSales =
+        allOrders.reduce(
+            (total, order) =>
+                total + Number(order.total || 0),
+            0
+        );
+
+
+    document.getElementById(
+        "total-orders"
+    ).textContent =
+        totalOrders;
+
+
+    document.getElementById(
+        "pending-orders"
+    ).textContent =
+        pendingOrders;
+
+
+    document.getElementById(
+        "paid-orders"
+    ).textContent =
+        paidOrders;
+
+
+    document.getElementById(
+        "total-sales"
+    ).textContent =
+        "KSh " +
+        totalSales.toLocaleString();
+
+}
 
     container.innerHTML =
         "";
