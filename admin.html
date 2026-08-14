@@ -273,6 +273,44 @@
         ">
 
 </div>
+
+            <!-- ORDER STATUS FILTER -->
+
+<div style="margin-bottom:25px;">
+
+    <select
+        id="order-status-filter"
+        onchange="filterOrders()"
+        style="
+            width:100%;
+            padding:14px 18px;
+            border:1px solid #dce5de;
+            border-radius:25px;
+            font-size:15px;
+            box-sizing:border-box;
+            outline:none;
+            background:white;
+        ">
+
+        <option value="All">All Order Statuses</option>
+
+        <option value="Pending">Pending</option>
+
+        <option value="Confirmed">Confirmed</option>
+
+        <option value="Processing">Processing</option>
+
+        <option value="Out for Delivery">
+            Out for Delivery
+        </option>
+
+        <option value="Delivered">Delivered</option>
+
+        <option value="Cancelled">Cancelled</option>
+
+    </select>
+
+</div>
             <div
                 id="orders-container"
                 class="orders-grid">
