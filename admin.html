@@ -808,24 +808,15 @@ function updateOrderSummary() {
                   
     <div style="display:flex; flex-direction:column; gap:6px;">
 
-    <span class="status">
+    <span class="status status-${order.order_status}">
         Order: ${order.order_status}
     </span>
 
-    <span
-        class="status"
-        style="
-            background:#fff4d6;
-            color:#8a6500;
-        ">
-
+    <span class="status status-${order.payment_status}">
         Payment: ${order.payment_status}
-
     </span>
 
 </div>
-
-    
 
 </div>
 
@@ -1166,11 +1157,18 @@ return (
 
                 </div>
 
-                <div style="display:flex; flex-direction:column; gap:6px;">
+            
+    <div style="display:flex; flex-direction:column; gap:6px;">
 
-    <span class="status">
+    <span class="status status-${order.order_status}">
         Order: ${order.order_status}
     </span>
+
+    <span class="status status-${order.payment_status}">
+        Payment: ${order.payment_status}
+    </span>
+
+</div>
 
     <span
         class="status"
