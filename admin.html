@@ -385,7 +385,7 @@ async function showDashboard() {
 // ==========================================
 // LOAD ORDERS
 // ==========================================
-
+let allOrders = [];
 async function loadOrders() {
 
     const container =
@@ -437,7 +437,7 @@ async function loadOrders() {
 
     }
 
-
+allOrders = data;
     if (!data || data.length === 0) {
 
         container.innerHTML = `
