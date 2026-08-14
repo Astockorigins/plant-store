@@ -799,6 +799,10 @@ function filterOrders() {
         searchInput.value
             .toLowerCase()
             .trim();
+    const statusFilter =
+    document.getElementById(
+        "order-status-filter"
+    ).value;
 
     const container =
         document.getElementById("orders-container");
@@ -822,12 +826,20 @@ function filterOrders() {
                 String(order.phone || "")
                     .toLowerCase();
 
-            return (
-                orderNumber.includes(search) ||
-                firstName.includes(search) ||
-                lastName.includes(search) ||
-                phone.includes(search)
-            );
+            const matchesSearch =
+    orderNumber.includes(search) ||
+    firstName.includes(search) ||
+    lastName.includes(search) ||
+    phone.includes(search);
+
+const matchesStatus =
+    statusFilter === "All" ||
+    order.order_status === statusFilter;
+
+return (
+    matchesSearch &&
+    matchesStatus
+);
 
         });
 
