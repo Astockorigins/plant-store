@@ -319,6 +319,45 @@
     </select>
 
 </div>
+
+<!-- PAYMENT STATUS FILTER -->
+
+<div style="margin-bottom:25px;">
+
+    <select
+        id="payment-status-filter"
+        onchange="filterOrders()"
+        style="
+            width:100%;
+            padding:14px 18px;
+            border:1px solid #dce5de;
+            border-radius:25px;
+            font-size:15px;
+            box-sizing:border-box;
+            outline:none;
+            background:white;
+        ">
+
+        <option value="All">
+            All Payment Statuses
+        </option>
+
+        <option value="pending">
+            Pending
+        </option>
+
+        <option value="paid">
+            Paid
+        </option>
+
+        <option value="failed">
+            Failed
+        </option>
+
+    </select>
+
+</div>
+    
             <div
                 id="orders-container"
                 class="orders-grid">
