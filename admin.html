@@ -385,7 +385,7 @@ async function showDashboard() {
 // ==========================================
 // LOAD ORDERS
 // ==========================================
-
+let allOrders = [];
 async function loadOrders() {
 
     const container =
@@ -437,10 +437,16 @@ async function loadOrders() {
 
     }
 
+allOrders = data;
 
-    if (!data || data.length === 0) {
+if (!data || data.length === 0) {
 
-        container.innerHTML = `
+    container.innerHTML = `
+        ...
+    `;
+
+    return;
+}
 
             <div class="empty-orders">
 
@@ -794,7 +800,53 @@ async function checkSession() {
 
 }
 
+// ==========================================
+// SEARCH ORDERS
+// ==========================================
 
+function filterOrders() {
+
+    const searchInput =
+        document.getElementById("order-search");
+
+    if (!searchInput) return;
+
+    const search =
+        searchInput.value
+            .toLowerCase()
+            .trim();
+
+    const filteredOrders =
+        allOrders.filter(order => {
+
+            const orderNumber =
+                String(order.order_number || "")
+                    .toLowerCase();
+
+            const firstName =
+                String(order.first_name || "")
+                    .toLowerCase();
+
+            const lastName =
+                String(order.last_name || "")
+                    .toLowerCase();
+
+            const phone =
+                String(order.phone || "")
+                    .toLowerCase();
+
+            return (
+                orderNumber.includes(search) ||
+                firstName.includes(search) ||
+                lastName.includes(search) ||
+                phone.includes(search)
+            );
+
+        });
+
+    displayOrders(filteredOrders);
+
+}
 checkSession();
 
 
