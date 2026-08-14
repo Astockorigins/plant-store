@@ -141,6 +141,43 @@
             padding: 60px 20px;
         }
 
+        .summary-card {
+    background: white;
+    border: 1px solid #e5ebe6;
+    border-radius: 18px;
+    padding: 22px;
+}
+
+.summary-card strong {
+    display: block;
+    color: #718078;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.summary-card span {
+    display: block;
+    color: #245c39;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+@media (max-width: 800px) {
+
+    #order-summary {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+}
+
+@media (max-width: 500px) {
+
+    #order-summary {
+        grid-template-columns: 1fr !important;
+    }
+
+}
+
     </style>
 
 </head>
@@ -252,6 +289,39 @@
                 </button>
 
             </div>
+            
+         <!-- ORDER SUMMARY -->
+
+<div
+    id="order-summary"
+    style="
+        display:grid;
+        grid-template-columns:repeat(4, 1fr);
+        gap:20px;
+        margin-bottom:35px;
+    ">
+
+    <div class="summary-card">
+        <strong>Total Orders</strong>
+        <span id="total-orders">0</span>
+    </div>
+
+    <div class="summary-card">
+        <strong>Pending Orders</strong>
+        <span id="pending-orders">0</span>
+    </div>
+
+    <div class="summary-card">
+        <strong>Paid Orders</strong>
+        <span id="paid-orders">0</span>
+    </div>
+
+    <div class="summary-card">
+        <strong>Total Sales</strong>
+        <span id="total-sales">KSh 0</span>
+    </div>
+
+</div>
 
 <!-- ORDER SEARCH -->
 
