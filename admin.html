@@ -252,7 +252,26 @@
                 </button>
 
             </div>
+<!-- ORDER SEARCH -->
 
+<div style="margin-bottom:25px;">
+
+    <input
+        type="text"
+        id="order-search"
+        placeholder="🔎 Search by order number, customer name or phone..."
+        oninput="filterOrders()"
+        style="
+            width:100%;
+            padding:14px 18px;
+            border:1px solid #dce5de;
+            border-radius:25px;
+            font-size:15px;
+            box-sizing:border-box;
+            outline:none;
+        ">
+
+</div>
 
             <div
                 id="orders-container"
