@@ -1155,20 +1155,198 @@ return (
             
     <div style="display:flex; flex-direction:column; gap:6px;">
 
-    <span class="status status-${order.order_status}">
-        Order: ${order.order_status}
-    </span>
+function filterOrders() {
 
-    <span class="status status-${order.payment_status}">
-        Payment: ${order.payment_status}
-    </span>
+    const searchInput =
+        document.getElementById("order-search");
 
-</div>
-</div>
-</div>
+    if (!searchInput) return;
+
+    const search =
+        searchInput.value
+            .toLowerCase()
+            .trim();
+
+    const statusFilter =
+        document.getElementById(
+            "order-status-filter"
+        ).value;
+
+    const paymentFilter =
+        document.getElementById(
+            "payment-status-filter"
+        ).value;
+
+    const filteredOrders =
+        allOrders.filter(order => {
+
+            const orderNumber =
+                String(
+                    order.order_number || ""
+                ).toLowerCase();
+
+            const firstName =
+                String(
+                    order.first_name || ""
+                ).toLowerCase();
+
+            const lastName =
+                String(
+                    order.last_name || ""
+                ).toLowerCase();
+
+            const phone =
+                String(
+                    order.phone || ""
+                ).toLowerCase();
+
+
+            const matchesSearch =
+                orderNumber.includes(search) ||
+                firstName.includes(search) ||
+                lastName.includes(search) ||
+                phone.includes(search);
+
+
+            const matchesStatus =
+                statusFilter === "All" ||
+                order.order_status === statusFilter;
+
+
+            const matchesPayment =
+                paymentFilter === "All" ||
+                order.payment_status === paymentFilter;
+
+
+            return (
+                matchesSearch &&
+                matchesStatus &&
+                matchesPayment
+            );
+
+        });
+
+
+    const container =
+        document.getElementById(
+            "orders-container"
+        );
+
+    container.innerHTML = "";
+
+
+    if (filteredOrders.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty-orders">
+
+                <h2>
+                    No matching orders
+                </h2>
+
+                <p>
+                    Try another order number,
+                    customer name, phone or filter.
+                </p>
+
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    filteredOrders.forEach(order => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "order-card";
+
+
+        let itemsHTML = "";
+
+
+        if (Array.isArray(order.items)) {
+
+            order.items.forEach(item => {
+
+                itemsHTML += `
+
+                    <div class="order-item">
+
+                        <span>
+                            ${item.name}
+                            ×
+                            ${item.quantity}
+                        </span>
+
+                        <strong>
+                            KSh
+                            ${(
+                                Number(item.price || 0) *
+                                Number(item.quantity || 0)
+                            ).toLocaleString()}
+                        </strong>
+
+                    </div>
+
+                `;
+
+            });
+
+        }
+
+
+        const orderDate =
+            new Date(
+                order.created_at
+            ).toLocaleString();
+
+
+        card.innerHTML = `
+
+            <div class="order-top">
+
+                <div>
+
+                    <div class="order-number">
+                        #${order.order_number}
+                    </div>
+
+                    <small>
+                        ${orderDate}
+                    </small>
+
+                </div>
+
+
+                <div style="
+                    display:flex;
+                    flex-direction:column;
+                    gap:6px;
+                ">
+
+                    <span class="status status-${order.order_status}">
+                        Order: ${order.order_status}
+                    </span>
+
+                    <span class="status status-${order.payment_status}">
+                        Payment: ${order.payment_status}
+                    </span>
+
+                </div>
+
+            </div>
+
+
             <div class="customer-info">
 
-                <strong>Customer</strong>
+                <strong>
+                    Customer
+                </strong>
 
                 <br>
 
@@ -1197,19 +1375,121 @@ return (
 
             </div>
 
+
             <div class="order-items">
+
                 ${itemsHTML}
+
             </div>
+
 
             <div class="order-total">
 
                 Total:
                 KSh
-                ${Number(order.total).toLocaleString()}
+                ${Number(order.total || 0)
+                    .toLocaleString()}
+
+            </div>
+
+
+            <div style="margin-top:20px;">
+
+                <label>
+                    Order Status
+                </label>
+
+                <select
+                    id="status-${order.id}"
+                    style="
+                        width:100%;
+                        padding:10px;
+                        margin:8px 0 15px;
+                        border-radius:8px;
+                        border:1px solid #dce5de;
+                    ">
+
+                    <option value="new"
+                        ${order.order_status === "new" ? "selected" : ""}>
+                        New
+                    </option>
+
+                    <option value="confirmed"
+                        ${order.order_status === "confirmed" ? "selected" : ""}>
+                        Confirmed
+                    </option>
+
+                    <option value="processing"
+                        ${order.order_status === "processing" ? "selected" : ""}>
+                        Processing
+                    </option>
+
+                    <option value="ready"
+                        ${order.order_status === "ready" ? "selected" : ""}>
+                        Ready
+                    </option>
+
+                    <option value="delivered"
+                        ${order.order_status === "delivered" ? "selected" : ""}>
+                        Delivered
+                    </option>
+
+                </select>
+
+
+                <label>
+                    Payment Status
+                </label>
+
+                <select
+                    id="payment-${order.id}"
+                    style="
+                        width:100%;
+                        padding:10px;
+                        margin:8px 0 15px;
+                        border-radius:8px;
+                        border:1px solid #dce5de;
+                    ">
+
+                    <option value="pending"
+                        ${order.payment_status === "pending" ? "selected" : ""}>
+                        Pending
+                    </option>
+
+                    <option value="paid"
+                        ${order.payment_status === "paid" ? "selected" : ""}>
+                        Paid
+                    </option>
+
+                    <option value="failed"
+                        ${order.payment_status === "failed" ? "selected" : ""}>
+                        Failed
+                    </option>
+
+                </select>
+
+
+                <button
+                    onclick="updateOrder(${order.id})"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:none;
+                        border-radius:25px;
+                        background:#2e7d4a;
+                        color:white;
+                        font-weight:bold;
+                        cursor:pointer;
+                    ">
+
+                    Update Order
+
+                </button>
 
             </div>
 
         `;
+
 
         container.appendChild(card);
 
