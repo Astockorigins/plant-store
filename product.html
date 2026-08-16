@@ -8,7 +8,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Plant | Plant Store</title>
+    <title>Peace Lily | Plant Store</title>
 
     <link rel="stylesheet"
           href="style.css">
@@ -27,22 +27,21 @@
         }
 
         .product-photo {
-            min-height: 550px;
-            border-radius: 25px;
-            background: #eef6ef;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
+    min-height: 550px;
+    border-radius: 25px;
+    background: #eef6ef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
 
-        .product-photo img {
-            width: 100%;
-            height: 550px;
-            object-fit: cover;
-            display: block;
-        }
-
+.product-photo img {
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+    display: block;
+}
         .product-details {
             padding-top: 20px;
         }
@@ -77,11 +76,6 @@
             font-size: 13px;
             font-weight: bold;
             margin-bottom: 25px;
-        }
-
-        .stock.out-of-stock {
-            background: #ffe4e4;
-            color: #a52f2f;
         }
 
         .product-details > p {
@@ -132,10 +126,6 @@
             cursor: pointer;
         }
 
-        .quantity button:hover {
-            background: #dcefe1;
-        }
-
         .quantity span {
             font-weight: bold;
             min-width: 25px;
@@ -158,17 +148,13 @@
             background: #245c39;
         }
 
-        .product-add:disabled {
-            background: #a8b5ac;
-            cursor: not-allowed;
-        }
-
         .back-link {
             display: inline-block;
             margin-bottom: 35px;
             color: #2e7d4a;
             font-weight: bold;
         }
+
 
         @media (max-width: 800px) {
 
@@ -179,10 +165,7 @@
 
             .product-photo {
                 min-height: 400px;
-            }
-
-            .product-photo img {
-                height: 400px;
+                font-size: 130px;
             }
 
             .product-details h1 {
@@ -191,14 +174,11 @@
 
         }
 
+
         @media (max-width: 500px) {
 
             .plant-info {
                 grid-template-columns: 1fr;
-            }
-
-            .product-page {
-                padding: 50px 0;
             }
 
         }
@@ -278,12 +258,12 @@
 
             <div class="product-photo">
 
-                <img
-                    id="product-image"
-                    src=""
-                    alt="Plant">
+    <img
+        id="product-image"
+        src=""
+        alt="Plant">
 
-            </div>
+</div>
 
 
             <!-- DETAILS -->
@@ -291,27 +271,43 @@
             <div class="product-details">
 
                 <span class="product-category">
-                    Loading...
+
+                    Indoor Plant
+
                 </span>
 
 
                 <h1>
-                    Loading product...
+
+                    Peace Lily
+
                 </h1>
 
 
                 <div class="product-price">
-                    KSh 0
+
+                    KSh 1,500
+
                 </div>
 
 
                 <span class="stock">
-                    Checking stock...
+
+                    ✓ In Stock
+
                 </span>
 
 
                 <p>
-                    Loading product description...
+
+                    The Peace Lily is a beautiful,
+                    elegant indoor plant that brings
+                    a fresh natural feeling into your
+                    home or office.
+
+                    It is easy to care for and works
+                    well in bright indirect light.
+
                 </p>
 
 
@@ -319,12 +315,13 @@
 
                 <div class="plant-info">
 
+
                     <div class="info-box">
 
                         <strong>☀️ Light</strong>
 
                         <span>
-                            —
+                            Bright indirect light
                         </span>
 
                     </div>
@@ -335,7 +332,7 @@
                         <strong>💧 Water</strong>
 
                         <span>
-                            —
+                            Moderate watering
                         </span>
 
                     </div>
@@ -346,7 +343,7 @@
                         <strong>🪴 Size</strong>
 
                         <span>
-                            —
+                            Medium
                         </span>
 
                     </div>
@@ -357,7 +354,7 @@
                         <strong>🌡️ Environment</strong>
 
                         <span>
-                            —
+                            Indoor
                         </span>
 
                     </div>
@@ -369,12 +366,9 @@
 
                 <div class="quantity">
 
-                    <span>
-                        Quantity:
-                    </span>
+                    <span>Quantity:</span>
 
                     <button
-                        type="button"
                         onclick="changeProductQuantity(-1)">
 
                         −
@@ -382,11 +376,12 @@
                     </button>
 
                     <span id="product-quantity">
+
                         1
+
                     </span>
 
                     <button
-                        type="button"
                         onclick="changeProductQuantity(1)">
 
                         +
@@ -399,9 +394,7 @@
                 <!-- ADD TO CART -->
 
                 <button
-                    id="add-to-cart-button"
                     class="product-add"
-                    type="button"
                     onclick="addProductToCart()">
 
                     🛒 Add to Cart
@@ -445,15 +438,8 @@
 </footer>
 
 
-<!-- SUPABASE -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="supabase.js"></script>
-
-<!-- MAIN STORE SCRIPT -->
-
 <script src="script.js"></script>
+<script src="products.js"></script>
 
 
 <script>
@@ -463,39 +449,36 @@
 // ==========================================
 
 let productQuantity = 1;
-let product = null;
 
 
-// ==========================================
-// GET PRODUCT ID FROM URL
-// ==========================================
+// ------------------------------------------
+// GET PRODUCT FROM URL
+// ------------------------------------------
 
 const urlParams =
-    new URLSearchParams(
-        window.location.search
-    );
+    new URLSearchParams(window.location.search);
 
 const productId =
     urlParams.get("plant");
 
+let product = null;
 
-// ==========================================
+
+// ------------------------------------------
+// CHECK PRODUCT
+// ------------------------------------------
+
+// ------------------------------------------
 // LOAD PRODUCT FROM SUPABASE
-// ==========================================
+// ------------------------------------------
 
 async function loadProduct() {
 
     if (!productId) {
-
         alert("Product not found.");
-
-        window.location.href =
-            "index.html#shop";
-
+        window.location.href = "shop.html";
         return;
-
     }
-
 
     const { data, error } =
         await supabaseClient
@@ -504,49 +487,36 @@ async function loadProduct() {
             .eq("id", productId)
             .single();
 
-
     if (error || !data) {
 
-        console.error(
-            "Product loading error:",
-            error
-        );
+        console.error("Product loading error:", error);
 
         alert("Product not found.");
 
-        window.location.href =
-            "index.html#shop";
+        window.location.href = "shop.html";
 
         return;
-
     }
 
+    product = {
+        ...data,
+        image: data.image_url
+    };
 
-    product = data;
 
-
-    // ======================================
-    // PAGE TITLE
-    // ======================================
+    // ------------------------------------------
+    // UPDATE PRODUCT PAGE
+    // ------------------------------------------
 
     document.title =
-        product.name +
-        " | Plant Store";
+        product.name + " | Plant Store";
 
-
-    // ======================================
-    // CATEGORY
-    // ======================================
 
     document.querySelector(
         ".product-category"
     ).textContent =
-        product.category || "Plant";
+        product.category;
 
-
-    // ======================================
-    // NAME
-    // ======================================
 
     document.querySelector(
         ".product-details h1"
@@ -554,182 +524,195 @@ async function loadProduct() {
         product.name;
 
 
-    // ======================================
-    // PRICE
-    // ======================================
-
     document.querySelector(
         ".product-price"
     ).textContent =
         "KSh " +
-        Number(
-            product.price || 0
-        ).toLocaleString();
+        Number(product.price).toLocaleString();
 
-
-    // ======================================
-    // DESCRIPTION
-    // ======================================
 
     document.querySelector(
         ".product-details > p"
     ).textContent =
-        product.description ||
-        "Beautiful plant for your home, office or garden.";
+        product.description;
 
-
-    // ======================================
-    // IMAGE
-    // ======================================
 
     const productImage =
-        document.getElementById(
-            "product-image"
-        );
+        document.getElementById("product-image");
 
-
-    if (product.image_url) {
-
-        productImage.src =
-            product.image_url;
-
-    } else {
-
-        productImage.src = "";
-
-    }
-
+    productImage.src =
+        product.image;
 
     productImage.alt =
         product.name;
 
 
-    // ======================================
-    // PLANT INFORMATION
-    // ======================================
-
     const infoBoxes =
-        document.querySelectorAll(
-            ".info-box"
-        );
+        document.querySelectorAll(".info-box");
 
 
-    infoBoxes[0]
-        .querySelector("span")
-        .textContent =
-            product.light || "—";
+    infoBoxes[0].querySelector("span")
+        .textContent = product.light || "";
 
 
-    infoBoxes[1]
-        .querySelector("span")
-        .textContent =
-            product.water || "—";
+    infoBoxes[1].querySelector("span")
+        .textContent = product.water || "";
 
 
-    infoBoxes[2]
-        .querySelector("span")
-        .textContent =
-            product.size || "—";
+    infoBoxes[2].querySelector("span")
+        .textContent = product.size || "";
 
 
-    infoBoxes[3]
-        .querySelector("span")
-        .textContent =
-            product.environment || "—";
+    infoBoxes[3].querySelector("span")
+        .textContent = product.environment || "";
 
 
-    // ======================================
-    // STOCK
-    // ======================================
+    // Update stock display
 
     const stockElement =
-        document.querySelector(
-            ".stock"
-        );
+        document.querySelector(".stock");
 
-
-    const stock =
-        Number(product.stock || 0);
-
-
-    if (stock > 0) {
+    if (product.stock > 0) {
 
         stockElement.textContent =
             "✓ In Stock (" +
-            stock +
+            product.stock +
             ")";
-
-        stockElement.classList.remove(
-            "out-of-stock"
-        );
 
     } else {
 
         stockElement.textContent =
             "✕ Out of Stock";
 
-        stockElement.classList.add(
-            "out-of-stock"
-        );
-
-    }
-
-
-    // ======================================
-    // QUANTITY
-    // ======================================
-
-    productQuantity = 1;
-
-    document.getElementById(
-        "product-quantity"
-    ).textContent =
-        productQuantity;
-
-
-    // ======================================
-    // DISABLE ADD BUTTON IF OUT OF STOCK
-    // ======================================
-
-    const addButton =
-        document.getElementById(
-            "add-to-cart-button"
-        );
-
-
-    if (stock <= 0) {
-
-        addButton.disabled = true;
-
-        addButton.textContent =
-            "Out of Stock";
-
-    } else {
-
-        addButton.disabled = false;
-
-        addButton.textContent =
-            "🛒 Add to Cart";
-
     }
 
 }
 
 
-// ==========================================
+// Load product
+
+loadProduct();
+
+
+// ------------------------------------------
 // CHANGE QUANTITY
-// ==========================================
+// ------------------------------------------
 
 function changeProductQuantity(amount) {
 
-    if (!product) {
-        return;
-    }
+    productQuantity += amount;
+
+<script src="script.js"></script>
+<script src="products.js"></script>
+
+<script>
+
+// ==========================================
+// PRODUCT PAGE
+// ==========================================
+
+let productQuantity = 1;
 
 
-    const stock =
-        Number(product.stock || 0);
+// ------------------------------------------
+// GET PRODUCT FROM URL
+// ------------------------------------------
 
+const urlParams =
+    new URLSearchParams(window.location.search);
+
+const productId =
+    urlParams.get("plant") || "peace-lily";
+
+const product =
+    products[productId];
+
+
+// ------------------------------------------
+// CHECK PRODUCT
+// ------------------------------------------
+
+if (!product) {
+
+    alert("Product not found.");
+
+    window.location.href = "index.html";
+
+}
+
+
+// ------------------------------------------
+// UPDATE PRODUCT PAGE
+// ------------------------------------------
+
+if (product) {
+
+    document.title =
+        product.name + " | Plant Store";
+
+
+    document.querySelector(
+        ".product-category"
+    ).textContent =
+        product.category;
+
+
+    document.querySelector(
+        ".product-details h1"
+    ).textContent =
+        product.name;
+
+
+    document.querySelector(
+        ".product-price"
+    ).textContent =
+        "KSh " +
+        product.price.toLocaleString();
+
+
+    document.querySelector(
+        ".product-details > p"
+    ).textContent =
+        product.description;
+
+
+    const productImage =
+        document.getElementById("product-image");
+
+    productImage.src =
+        product.image;
+
+    productImage.alt =
+        product.name;
+
+
+    const infoBoxes =
+        document.querySelectorAll(".info-box");
+
+
+    infoBoxes[0].querySelector("span")
+        .textContent = product.light;
+
+
+    infoBoxes[1].querySelector("span")
+        .textContent = product.water;
+
+
+    infoBoxes[2].querySelector("span")
+        .textContent = product.size;
+
+
+    infoBoxes[3].querySelector("span")
+        .textContent = product.environment;
+
+}
+
+
+// ------------------------------------------
+// CHANGE QUANTITY
+// ------------------------------------------
+
+function changeProductQuantity(amount) {
 
     productQuantity += amount;
 
@@ -741,13 +724,9 @@ function changeProductQuantity(amount) {
     }
 
 
-    if (
-        stock > 0 &&
-        productQuantity > stock
-    ) {
+    if (productQuantity > product.stock) {
 
-        productQuantity =
-            stock;
+        productQuantity = product.stock;
 
     }
 
@@ -760,63 +739,14 @@ function changeProductQuantity(amount) {
 }
 
 
-// ==========================================
+// ------------------------------------------
 // ADD PRODUCT TO CART
-// ==========================================
+// ------------------------------------------
 
 function addProductToCart() {
 
-    if (!product) {
+    if (!product) return;
 
-        alert(
-            "Product is still loading."
-        );
-
-        return;
-
-    }
-
-
-    const stock =
-        Number(product.stock || 0);
-
-
-    if (stock <= 0) {
-
-        alert(
-            "This product is out of stock."
-        );
-
-        return;
-
-    }
-
-
-    if (productQuantity > stock) {
-
-        alert(
-            "Only " +
-            stock +
-            " available."
-        );
-
-        productQuantity =
-            stock;
-
-        document.getElementById(
-            "product-quantity"
-        ).textContent =
-            productQuantity;
-
-        return;
-
-    }
-
-
-    /*
-     * Use the existing addToCart()
-     * function from script.js.
-     */
 
     for (
         let i = 0;
@@ -826,7 +756,7 @@ function addProductToCart() {
 
         addToCart(
             product.name,
-            Number(product.price || 0)
+            product.price
         );
 
     }
@@ -841,15 +771,7 @@ function addProductToCart() {
 
 }
 
-
-// ==========================================
-// START
-// ==========================================
-
-loadProduct();
-
 </script>
-
 
 </body>
 
