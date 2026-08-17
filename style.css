@@ -56,7 +56,12 @@ a {
     font-weight: 700;
     color: #245c39;
 }
-
+.logo img {
+    height: 55px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+}
 nav {
     display: flex;
     align-items: center;
