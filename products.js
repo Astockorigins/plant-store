@@ -10,7 +10,7 @@ const products = {
         category: "Indoor Plant",
         description:
             "A beautiful, elegant indoor plant that brings a fresh natural feeling into your home or office. It is easy to care for and works well in bright indirect light.",
-        image: "https://qnfkmsgqzocbiuwmibgq.supabase.co/storage/v1/object/public/plant-images/Peacelily-lily.jpg",
+        image: "https://qnfkmsgqzocbiuwmibgq.supabase.co/storage/v1/object/public/plant-images/Peace-lily/file_00000000d84481f4b1a9733cf155222c.png",
         light: "Bright indirect light",
         water: "Moderate watering",
         size: "Medium",
