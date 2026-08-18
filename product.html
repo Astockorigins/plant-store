@@ -441,89 +441,101 @@
 <script src="script.js"></script>
 <script src="products.js"></script>
 
+
 <script>
-/* product.html — unified client-side product render using products.js */
-(function(){
-  try{
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get("plant") || "peace-lily";
-    const product = window.products && window.products[productId];
 
-    if (!product) {
-      alert("Product not found.");
-      window.location.href = "shop.html";
-      return;
-    }
+// ==========================================
+// PRODUCT PAGE (products.js as source)
+// ==========================================
 
-    // Basic DOM population safely (check selectors exist)
+let productQuantity = 1;
+
+// GET PRODUCT FROM URL
+const urlParams = new URLSearchParams(window.location.search);
+const productId = urlParams.get("plant") || "peace-lily";
+
+// Use the global `products` catalogue from products.js (not window.products)
+const product = (typeof products !== "undefined") ? products[productId] : undefined;
+
+// If product not found, bail out
+if (!product) {
+    alert("Product not found.");
+    window.location.href = "index.html";
+}
+
+// Helper: safe number for stock
+const productStock = product ? Number(product.stock || 0) : 0;
+
+if (product) {
+    // Update document title and fields
     document.title = product.name + " | Plant Store";
 
-    const categoryEl = document.querySelector(".product-category");
-    if (categoryEl) categoryEl.textContent = product.category || "";
+    document.querySelector(".product-category").textContent = product.category || "";
+    document.querySelector(".product-details h1").textContent = product.name || "";
 
-    const titleEl = document.querySelector(".product-details h1");
-    if (titleEl) titleEl.textContent = product.name || "";
-
-    const priceEl = document.querySelector(".product-price");
-    if (priceEl) priceEl.textContent = "KSh " + (Number(product.price)||0).toLocaleString();
-
-    const descEl = document.querySelector(".product-details > p");
-    if (descEl) descEl.textContent = product.description || "";
+    document.querySelector(".product-price").textContent = "KSh " + Number(product.price).toLocaleString();
+    document.querySelector(".product-details > p").textContent = product.description || "";
 
     const productImage = document.getElementById("product-image");
-    if (productImage) {
-      productImage.src = product.image || "";
-      productImage.alt = product.name || "Plant";
-    }
+    productImage.src = product.image || "";
+    productImage.alt = product.name || "Plant";
 
     const infoBoxes = document.querySelectorAll(".info-box");
     if (infoBoxes && infoBoxes.length >= 4) {
-      if (infoBoxes[0].querySelector("span")) infoBoxes[0].querySelector("span").textContent = product.light || "";
-      if (infoBoxes[1].querySelector("span")) infoBoxes[1].querySelector("span").textContent = product.water || "";
-      if (infoBoxes[2].querySelector("span")) infoBoxes[2].querySelector("span").textContent = product.size || "";
-      if (infoBoxes[3].querySelector("span")) infoBoxes[3].querySelector("span").textContent = product.environment || "";
+        infoBoxes[0].querySelector("span").textContent = product.light || "";
+        infoBoxes[1].querySelector("span").textContent = product.water || "";
+        infoBoxes[2].querySelector("span").textContent = product.size || "";
+        infoBoxes[3].querySelector("span").textContent = product.environment || "";
     }
 
+    // Update stock display and add-to-cart state
     const stockElement = document.querySelector(".stock");
-    if (stockElement) {
-      if (typeof product.stock === "number") {
-        stockElement.textContent = product.stock > 0 ? ("✓ In Stock (" + product.stock + ")") : "✕ Out of Stock";
-      } else {
-        stockElement.textContent = "✓ In Stock";
-      }
+    const addButton = document.querySelector(".product-add");
+
+    if (productStock > 0) {
+        stockElement.textContent = "✓ In Stock (" + productStock + ")";
+        addButton.disabled = false;
+        addButton.textContent = "🛒 Add to Cart";
+    } else {
+        stockElement.textContent = "✕ Out of Stock";
+        // disable adding to cart when stock is 0
+        addButton.disabled = true;
+        addButton.textContent = "Out of Stock";
     }
-
-    // Quantity handling and exposure of globals used by inline onclick handlers
-    let productQuantity = 1;
-
-    window.changeProductQuantity = function(amount) {
-      productQuantity = Number(productQuantity) + Number(amount);
-      if (productQuantity < 1) productQuantity = 1;
-      if (product.stock && typeof product.stock === "number" && productQuantity > product.stock) productQuantity = product.stock;
-      const qEl = document.getElementById("product-quantity");
-      if (qEl) qEl.textContent = productQuantity;
-    };
-
-    window.addProductToCart = function() {
-      if (!product) return;
-      for (let i = 0; i < productQuantity; i++) {
-        if (typeof window.addToCart === "function") {
-          window.addToCart(product.name, product.price);
-        } else {
-          console.error("addToCart is not available");
-        }
-      }
-      alert(productQuantity + " " + product.name + " added to your cart.");
-    };
 
     // Initialize displayed quantity
-    const qElInit = document.getElementById("product-quantity");
-    if (qElInit) qElInit.textContent = productQuantity;
+    document.getElementById("product-quantity").textContent = productQuantity;
+}
 
-  } catch (err) {
-    console.error("Product page error:", err);
-  }
-})();
+// CHANGE QUANTITY
+function changeProductQuantity(amount) {
+    productQuantity += amount;
+
+    if (productQuantity < 1) {
+        productQuantity = 1;
+    }
+
+    if (product && productStock > 0 && productQuantity > productStock) {
+        productQuantity = productStock;
+    }
+
+    document.getElementById("product-quantity").textContent = productQuantity;
+}
+
+// ADD PRODUCT TO CART
+function addProductToCart() {
+    if (!product) return;
+
+    if (productStock === 0) return; // do not add out-of-stock items
+
+    for (let i = 0; i < productQuantity; i++) {
+        // Keep existing addToCart(name, price) unchanged
+        addToCart(product.name, product.price);
+    }
+
+    alert(productQuantity + " " + product.name + " added to your cart.");
+}
+
 </script>
 
 </body>
