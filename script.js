@@ -2,8 +2,20 @@
 // PLANT STORE - SHOPPING CART
 // ==========================================
 
-let cart = JSON.parse(localStorage.getItem("plantStoreCart")) || [];
+let cart = [];
 
+/* Safely load cart from localStorage */
+(function loadCartFromStorage() {
+    try {
+        const raw = localStorage.getItem("plantStoreCart");
+        cart = raw ? JSON.parse(raw) : [];
+        if (!Array.isArray(cart)) cart = [];
+    } catch (e) {
+        // If parsing fails (corrupt or tampered data), fall back to an empty cart.
+        cart = [];
+        console.warn("plantStoreCart: invalid JSON, starting with empty cart.", e);
+    }
+})();
 
 // ------------------------------------------
 // UPDATE CART COUNT
@@ -16,7 +28,7 @@ function updateCartCount() {
     if (!cartCount) return;
 
     const totalItems = cart.reduce(
-        (total, item) => total + item.quantity,
+        (total, item) => total + (Number(item.quantity) || 0),
         0
     );
 
@@ -30,28 +42,34 @@ function updateCartCount() {
 
 function addToCart(name, price) {
 
+    const priceNum = Number(price) || 0;
+
     const existingProduct = cart.find(
         item => item.name === name
     );
 
     if (existingProduct) {
 
-        existingProduct.quantity += 1;
+        existingProduct.quantity = (Number(existingProduct.quantity) || 0) + 1;
 
     } else {
 
         cart.push({
             name: name,
-            price: price,
+            price: priceNum,
             quantity: 1
         });
 
     }
 
-    localStorage.setItem(
-        "plantStoreCart",
-        JSON.stringify(cart)
-    );
+    try {
+        localStorage.setItem(
+            "plantStoreCart",
+            JSON.stringify(cart)
+        );
+    } catch (e) {
+        console.warn("Failed to save cart to localStorage.", e);
+    }
 
     updateCartCount();
 
@@ -69,10 +87,14 @@ function removeFromCart(name) {
         item => item.name !== name
     );
 
-    localStorage.setItem(
-        "plantStoreCart",
-        JSON.stringify(cart)
-    );
+    try {
+        localStorage.setItem(
+            "plantStoreCart",
+            JSON.stringify(cart)
+        );
+    } catch (e) {
+        console.warn("Failed to save cart to localStorage.", e);
+    }
 
     updateCartCount();
 
@@ -94,17 +116,24 @@ function changeQuantity(name, amount) {
 
     if (!product) return;
 
-    product.quantity += amount;
+    const currentQty = Number(product.quantity) || 0;
+    const newQty = currentQty + Number(amount);
 
-    if (product.quantity <= 0) {
+    if (newQty <= 0) {
         removeFromCart(name);
         return;
     }
 
-    localStorage.setItem(
-        "plantStoreCart",
-        JSON.stringify(cart)
-    );
+    product.quantity = Math.floor(newQty);
+
+    try {
+        localStorage.setItem(
+            "plantStoreCart",
+            JSON.stringify(cart)
+        );
+    } catch (e) {
+        console.warn("Failed to save cart to localStorage.", e);
+    }
 
     updateCartCount();
 
@@ -120,11 +149,14 @@ function changeQuantity(name, amount) {
 
 function getCartTotal() {
 
-    return cart.reduce(
-        (total, item) =>
-            total + (item.price * item.quantity),
+    const total = cart.reduce(
+        (sum, item) =>
+            sum + ((Number(item.price) || 0) * (Number(item.quantity) || 0)),
         0
     );
+
+    // Avoid floating-point artifacts for display consumers:
+    return Math.round(total * 100) / 100;
 }
 
 
@@ -139,10 +171,14 @@ updateCartCount();
 
 window.addEventListener("pageshow", function () {
 
-    cart =
-        JSON.parse(
-            localStorage.getItem("plantStoreCart")
-        ) || [];
+    try {
+        const raw = localStorage.getItem("plantStoreCart");
+        cart = raw ? JSON.parse(raw) : [];
+        if (!Array.isArray(cart)) cart = [];
+    } catch (e) {
+        cart = [];
+        console.warn("plantStoreCart: invalid JSON on pageshow, starting with empty cart.", e);
+    }
 
     updateCartCount();
 
