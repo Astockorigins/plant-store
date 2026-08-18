@@ -318,6 +318,13 @@ function displayCart() {
         const itemTotal =
             item.price * item.quantity;
 
+        // Safely escape item name for HTML context
+        const escapedName = String(item.name)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
 
         itemsHTML += `
 
@@ -326,7 +333,7 @@ function displayCart() {
                 <div class="cart-item-info">
 
                     <h3>
-                        ${item.name}
+                        ${escapedName}
                     </h3>
 
                     <p>
@@ -342,9 +349,8 @@ function displayCart() {
                     <div class="quantity-controls">
 
                         <button
-                            onclick="changeQuantity(
-                                '${item.name}', -1
-                            )">
+                            class="qty-decrease"
+                            data-item-name="${escapedName}">
 
                             −
 
@@ -355,9 +361,8 @@ function displayCart() {
                         </span>
 
                         <button
-                            onclick="changeQuantity(
-                                '${item.name}', 1
-                            )">
+                            class="qty-increase"
+                            data-item-name="${escapedName}">
 
                             +
 
@@ -373,9 +378,7 @@ function displayCart() {
 
                     <button
                         class="remove-btn"
-                        onclick="removeFromCart(
-                            '${item.name}'
-                        )">
+                        data-item-name="${escapedName}">
 
                         Remove
 
@@ -461,6 +464,42 @@ function displayCart() {
         </div>
 
     `;
+
+    // Attach event listeners after rendering
+    attachCartEventListeners();
+
+}
+
+
+// ==========================================
+// CART EVENT LISTENERS
+// ==========================================
+
+function attachCartEventListeners() {
+
+    // Decrease quantity buttons
+    document.querySelectorAll(".qty-decrease").forEach(btn => {
+        btn.addEventListener("click", function() {
+            const itemName = this.getAttribute("data-item-name");
+            changeQuantity(itemName, -1);
+        });
+    });
+
+    // Increase quantity buttons
+    document.querySelectorAll(".qty-increase").forEach(btn => {
+        btn.addEventListener("click", function() {
+            const itemName = this.getAttribute("data-item-name");
+            changeQuantity(itemName, 1);
+        });
+    });
+
+    // Remove buttons
+    document.querySelectorAll(".remove-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+            const itemName = this.getAttribute("data-item-name");
+            removeFromCart(itemName);
+        });
+    });
 
 }
 
