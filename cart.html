@@ -343,7 +343,7 @@ function displayCart() {
 
                         <button
                             onclick="changeQuantity(
-                                '${item.name}', -1
+                                ${JSON.stringify(item.name)}, -1
                             )">
 
                             −
@@ -356,7 +356,7 @@ function displayCart() {
 
                         <button
                             onclick="changeQuantity(
-                                '${item.name}', 1
+                                ${JSON.stringify(item.name)}, 1
                             )">
 
                             +
@@ -374,7 +374,7 @@ function displayCart() {
                     <button
                         class="remove-btn"
                         onclick="removeFromCart(
-                            '${item.name}'
+                            ${JSON.stringify(item.name)}
                         )">
 
                         Remove
