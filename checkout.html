@@ -735,6 +735,72 @@ if (cart.length === 0) {
 
 
 // ==========================================
+// VALIDATION HELPERS
+// ==========================================
+
+// Escape HTML entities to prevent XSS
+function escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Validate Kenyan phone number format
+// Accepts: 07XXXXXXXX, 01XXXXXXXX, +2547XXXXXXXX, +2541XXXXXXXX, 2547XXXXXXXX, 2541XXXXXXXX
+// Allows spaces
+function isValidKenyanPhone(phone) {
+    const cleanPhone = phone.replace(/\s/g, "");
+    const kenyaPhoneRegex = /^(\+254|254|0)(7|1)[0-9]{8}$/;
+    return kenyaPhoneRegex.test(cleanPhone);
+}
+
+// Validate email format (basic)
+// Returns true if empty (optional) or valid format
+function isValidEmail(email) {
+    if (!email) return true; // Email is optional
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Re-read and validate cart from localStorage
+// Returns validated cart array or null if empty/invalid
+function getAndValidateCart() {
+    try {
+        const raw = localStorage.getItem("plantStoreCart");
+        const cartFromStorage = raw ? JSON.parse(raw) : [];
+        if (!Array.isArray(cartFromStorage) || cartFromStorage.length === 0) {
+            return null;
+        }
+        // Validate each item has required fields with valid values
+        const isValid = cartFromStorage.every(item =>
+            item.name &&
+            typeof item.name === "string" &&
+            item.name.trim().length > 0 &&
+            typeof item.price === "number" &&
+            item.price > 0 &&
+            typeof item.quantity === "number" &&
+            item.quantity > 0
+        );
+        return isValid ? cartFromStorage : null;
+    } catch (e) {
+        console.warn("Failed to read/validate cart from storage", e);
+        return null;
+    }
+}
+
+// Clear cart from localStorage and reset in-memory cart
+function clearCart() {
+    try {
+        localStorage.removeItem("plantStoreCart");
+    } catch (e) {
+        console.warn("Failed to clear cart from localStorage", e);
+    }
+
+    cart = [];
+}
+
+
+// ==========================================
 // DISPLAY ORDER
 // ==========================================
 
@@ -766,13 +832,15 @@ function displayCheckout() {
             "checkout-item";
 
 
+        const escapedName = escapeHtml(item.name);
+
         itemElement.innerHTML = `
 
             <div>
 
                 <div class="checkout-item-name">
 
-                    ${item.name}
+                    ${escapedName}
 
                 </div>
 
@@ -902,18 +970,54 @@ document.getElementById(
 
 
         // ==============================
-        // CHECK CART
+        // PHONE VALIDATION
         // ==============================
 
-        if (cart.length === 0) {
+        if (!isValidKenyanPhone(phone)) {
+            alert("Please enter a valid Kenyan phone number (07XXXXXXXX, 01XXXXXXXX, or +254...)");
+            return;
+        }
 
-            alert(
-                "Your cart is empty."
+
+        // ==============================
+        // EMAIL VALIDATION
+        // ==============================
+
+        if (!isValidEmail(email)) {
+            alert("Please enter a valid email address.");
+            return;
+        }
+
+
+        // ==============================
+        // RE-VALIDATE CART
+        // ==============================
+
+        const validatedCart = getAndValidateCart();
+        if (!validatedCart) {
+            alert("Your cart is empty or invalid. Please try again.");
+            return;
+        }
+
+
+        // ==============================
+        // PREVENT DUPLICATE SUBMISSION
+        // ==============================
+
+        const button =
+            document.querySelector(
+                ".place-order-btn"
             );
 
+        if (button.disabled) {
+            // Already submitting, ignore click
             return;
-
         }
+
+        button.disabled = true;
+
+        button.textContent =
+            "Submitting Order...";
 
 
         // ==============================
@@ -931,21 +1035,6 @@ document.getElementById(
 
         const total =
             getCartTotal();
-
-
-        // ==============================
-        // DISABLE BUTTON
-        // ==============================
-
-        const button =
-            document.querySelector(
-                ".place-order-btn"
-            );
-
-        button.disabled = true;
-
-        button.textContent =
-            "Submitting Order...";
 
 
         // ==============================
@@ -986,7 +1075,7 @@ document.getElementById(
                             notes,
 
                         items:
-                            cart,
+                            validatedCart,
 
                         total:
                             total,
@@ -998,7 +1087,7 @@ document.getElementById(
                             "new"
 
                     }
-                        ]);
+                ]);
 
 
         // ==============================
@@ -1013,9 +1102,9 @@ document.getElementById(
             );
 
             alert(
-    "Supabase error: " +
-    error.message
-);
+                "Supabase error: " +
+                error.message
+            );
 
             button.disabled = false;
 
@@ -1025,6 +1114,13 @@ document.getElementById(
             return;
 
         }
+
+
+        // ==============================
+        // SUCCESS - CLEAR CART
+        // ==============================
+
+        clearCart();
 
 
         // ==============================
@@ -1039,39 +1135,30 @@ document.getElementById(
                     orderNumber,
 
                 customer: {
-
                     firstName:
                         firstName,
-
                     lastName:
                         lastName,
-
                     phone:
                         phone,
-
                     email:
                         email
-
                 },
 
                 delivery: {
-
                     area:
                         area,
-
                     address:
                         address,
-
                     method:
                         delivery
-
                 },
 
                 notes:
                     notes,
 
                 items:
-                    cart,
+                    validatedCart,
 
                 total:
                     total,
